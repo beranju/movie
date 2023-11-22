@@ -1,15 +1,15 @@
 package com.beran.domain.model
 
 data class MovieItem(
-    val overview: String? = null,
-    val originalTitle: String? = null,
-    val title: String? = null,
-    val genreIds: List<Int?>? = null,
-    val posterPath: String? = null,
-    val backdropPath: String? = null,
-    val releaseDate: String? = null,
-    val popularity: Any? = null,
-    val voteAverage: Any? = null,
-    val id: Int? = null,
-    val voteCount: Int? = null
+    val overview: String,
+    val originalTitle: String,
+    val title: String,
+    val genreIds: List<Int>,
+    val posterPath: String,
+    val backdropPath: String,
+    val releaseDate: String,
+    val popularity: Double,
+    val voteAverage: Double,
+    val id: Int,
+    val voteCount: Int
 )
