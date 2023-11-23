@@ -5,6 +5,7 @@ object Constants {
     // API SERVICE CONSTANTS
     const val BASE_URL = "https://api.themoviedb.org/3/"
     const val IMG_BASE_URL = "https://image.tmdb.org/t/p/original/"
+    const val IMG_BB_BASE_URL = "https://api.imgbb.com/1/"
 
     // RV CONSTANTS
     const val NOW_MOVIE_TYPE = 0

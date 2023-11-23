@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.beran.common.Constants.IMG_BASE_URL
 import com.beran.common.Constants.NOW_MOVIE_TYPE
 import com.beran.domain.model.MovieItem
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.databinding.ItemMovieBinding
@@ -26,7 +27,7 @@ class MovieAdapter(
                 val rating = data?.voteAverage.toString().toFloatOrNull()?.div(2)
                 tvTitle.text = data?.title
                 rbVote.rating = rating ?: 0f
-                ivThumbnail.loadUrl(data?.posterPath.orEmpty())
+                ivThumbnail.loadUrl(IMG_BASE_URL+data?.posterPath.orEmpty())
             }
         }
 
@@ -45,7 +46,7 @@ class MovieAdapter(
                 val rating = data?.voteAverage.toString().toFloatOrNull()?.div(2)
                 tvTitle.text = data?.title
                 rbVote.rating = rating ?: 0f
-                sivThumbnail.loadUrl(data?.posterPath.orEmpty())
+                sivThumbnail.loadUrl(IMG_BASE_URL+data?.posterPath.orEmpty())
             }
         }
 

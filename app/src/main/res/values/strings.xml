@@ -41,4 +41,6 @@
     <string name="select_image_source">Select image source</string>
     <string name="cancel">Cancel</string>
     <string name="ok">OK</string>
+    <string name="image_source_title">Image source</string>
+    <string name="image_source_description">Select the image source</string>
 </resources>

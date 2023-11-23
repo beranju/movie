@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import com.beran.data.local.pref.SessionManager
+import com.beran.data.network.retrofit.ImgBbApi
 import com.beran.data.network.retrofit.MovieApi
 import com.beran.data.repository.AuthRepositoryImpl
 import com.beran.data.repository.MovieRepositoryImpl
@@ -33,8 +34,8 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideAuthRepository(sessionManager: SessionManager): AuthRepository =
-        AuthRepositoryImpl(sessionManager)
+    fun provideAuthRepository(sessionManager: SessionManager, api: ImgBbApi): AuthRepository =
+        AuthRepositoryImpl(sessionManager, api)
 
     @Singleton
     @Provides

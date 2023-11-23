@@ -8,7 +8,7 @@ import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.R
 
 fun ImageView.loadUrl(url: String) =
     Glide.with(this.context)
-        .load(IMG_BASE_URL + url)
+        .load(url)
         .apply(
             RequestOptions.placeholderOf(R.drawable.ic_load_img)
                 .error(R.drawable.ic_broken_img)

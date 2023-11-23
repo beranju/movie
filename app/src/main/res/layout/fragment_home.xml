@@ -30,6 +30,7 @@
             android:id="@+id/siv_avatar"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:scaleType="fitXY"
             android:src="@drawable/ic_avatar"
             app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full" />
 

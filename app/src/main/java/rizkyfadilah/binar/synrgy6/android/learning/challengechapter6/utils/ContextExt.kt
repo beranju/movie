@@ -13,6 +13,8 @@ import com.beran.common.Constants.FILE_NAME_FORMAT
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.BuildConfig
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.R
 import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -62,7 +64,6 @@ fun Context.showCameraOptions(
         }
         setOnDismissListener {
             it.dismiss()
-            showToast(getString(R.string.select_image_source))
         }
     }
 
@@ -98,4 +99,21 @@ fun Context.getImageUriForPreQ(): Uri {
         "${BuildConfig.APPLICATION_ID}.fileprovider",
         imageFile
     )
+}
+
+fun Context.uriToTempFile(uri: Uri): File? {
+    try {
+        val myFile = File.createTempFile(timeStamp, ".jpg", this.externalCacheDir)
+        val inputStream = contentResolver.openInputStream(uri) as InputStream
+        val outputStream = FileOutputStream(myFile)
+        val buffer = ByteArray(1024)
+        var length: Int
+        while (inputStream.read(buffer).also { length = it } > 0) outputStream.write(buffer, 0, length)
+        outputStream.close()
+        inputStream.close()
+        return myFile
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
+    return null
 }

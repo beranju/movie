@@ -19,11 +19,14 @@ import kotlinx.coroutines.launch
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.R
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.databinding.FragmentProfileBinding
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.AuthState
+import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.UploadState
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.UserState
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.utils.getImgUri
+import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.utils.loadUrl
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.utils.showAlert
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.utils.showCameraOptions
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.utils.showToast
+import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.utils.uriToTempFile
 import java.util.Calendar
 
 @AndroidEntryPoint
@@ -36,12 +39,13 @@ class ProfileFragment : Fragment() {
     private lateinit var name: String
     private lateinit var birthday: String
     private lateinit var address: String
+    private lateinit var photoProfile: String
     private val viewModel by viewModels<SharedAuthViewModel>()
 
     private val launcherGallery = registerForActivityResult(
         ActivityResultContracts.PickVisualMedia()
     ) { uri ->
-        if (uri != null){
+        if (uri != null) {
             imageUri = uri
             showImage()
         }
@@ -49,26 +53,60 @@ class ProfileFragment : Fragment() {
 
     private val launcherCamera = registerForActivityResult(
         ActivityResultContracts.TakePicture()
-    ) {isSuccess ->
+    ) { isSuccess ->
         if (isSuccess) {
             showImage()
         }
     }
 
     private fun showImage() {
-        binding.sivProfile.setImageURI(imageUri)
+        if (imageUri != null) {
+            binding.sivProfile.setImageURI(imageUri)
+        } else if (photoProfile.isNotEmpty()) {
+            binding.sivProfile.loadUrl(photoProfile)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.userState.observe(viewLifecycleOwner) { state ->
+        viewModel.uploadState.observe(viewLifecycleOwner) { state ->
             when (state) {
-                is UserState.Loading -> {
+                is UploadState.Loading ->
                     binding.btnUpdate.isEnabled = false
+
+                is UploadState.Error -> {
+                    binding.btnUpdate.isEnabled = true
+                    requireContext().showToast("Upload failed, try again")
                 }
 
+                is UploadState.Success -> {
+                    binding.btnUpdate.isEnabled = true
+                    val newUsername = binding.tieUsername.text.toString().trim()
+                    val newName = binding.tieName.text.toString().trim()
+                    val newBirthday = binding.tieBirthday.text.toString().trim()
+                    val newAddress = binding.tieAddress.text.toString().trim()
+                    val newImageUrl = state.url
+                    val user = UserData(
+                        name = newName,
+                        username = newUsername,
+                        birthDay = newBirthday,
+                        address = newAddress,
+                        imageUrl = newImageUrl
+                    )
+                    viewModel.saveData(user)
+                    requireContext().showToast(getString(R.string.update_profile_successfully))
+                }
+            }
+        }
+
+        viewModel.userState.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is UserState.Loading ->
+                    binding.btnUpdate.isEnabled = false
+
                 is UserState.Error -> {
+                    binding.btnUpdate.isEnabled = true
                     Toast.makeText(
                         requireContext(),
                         getString(R.string.error_message),
@@ -77,6 +115,7 @@ class ProfileFragment : Fragment() {
                 }
 
                 is UserState.Success -> {
+                    binding.btnUpdate.isEnabled = true
                     val user = state.userData
                     username = user.username
                     binding.tieUsername.setText(user.username)
@@ -86,6 +125,10 @@ class ProfileFragment : Fragment() {
                     binding.tieBirthday.setText(user.birthDay)
                     address = user.address
                     binding.tieAddress.setText(user.address)
+                    photoProfile = user.imageUrl
+                    if (user.imageUrl.isNotEmpty()) {
+                        binding.sivProfile.loadUrl(user.imageUrl)
+                    }
                 }
             }
         }
@@ -98,11 +141,30 @@ class ProfileFragment : Fragment() {
 
                 is AuthState.Error -> {
                     requireContext().showToast(getString(R.string.logout_failed_try_again))
+                    binding.btnLogout.isEnabled = true
                 }
 
                 is AuthState.Success -> {
                     findNavController().popBackStack(R.id.homeFragment, true)
                     findNavController().navigate(R.id.loginFragment)
+                }
+            }
+        }
+
+        viewModel.saveDataState.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is AuthState.Loading -> {
+                    binding.btnLogout.isEnabled = false
+                }
+
+                is AuthState.Error -> {
+                    binding.btnLogout.isEnabled = true
+                    requireContext().showToast("Save data failed, try again!")
+                }
+
+                is AuthState.Success -> {
+                    binding.btnLogout.isEnabled = true
+                    requireContext().showToast("Update data successfully")
                 }
             }
         }
@@ -142,20 +204,27 @@ class ProfileFragment : Fragment() {
             val newBirthday = binding.tieBirthday.text.toString().trim()
             val newAddress = binding.tieAddress.text.toString().trim()
 
-            when {
-                username != newUsername || name != newName || birthday != newBirthday || address != newAddress -> {
+            if (username != newUsername || name != newName || birthday != newBirthday || address != newAddress || imageUri != null) {
+                if (imageUri != null) {
+                    imageUri?.let {
+                        val imageFile = requireContext().uriToTempFile(imageUri!!)
+                        if (imageFile != null) {
+                            viewModel.uploadPhoto(imageFile)
+                        }
+                    }
+                } else {
                     val user = UserData(
                         name = newName,
                         username = newUsername,
                         birthDay = newBirthday,
                         address = newAddress,
-                        imageUrl = "image.jpg"
+                        imageUrl = photoProfile
                     )
                     viewModel.saveData(user)
                     requireContext().showToast(getString(R.string.update_profile_successfully))
                 }
-
-                else -> requireContext().showToast(getString(R.string.no_update))
+            } else {
+                requireContext().showToast(getString(R.string.no_update))
             }
             binding.tieUsername.clearFocus()
             binding.tieName.clearFocus()
@@ -163,16 +232,18 @@ class ProfileFragment : Fragment() {
             binding.tieAddress.clearFocus()
         }
 
-        binding.sivAddPhoto.setOnClickListener {requireContext().showCameraOptions(
-            "Image source",
-            "Select the image source",
-            galleryCallback = {
-                launcherGallery.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
-            },
-            cameraCallback = {
-                imageUri = requireContext().getImgUri()
-                launcherCamera.launch(imageUri)
-            })
+
+        binding.sivAddPhoto.setOnClickListener {
+            requireContext().showCameraOptions(
+                getString(R.string.image_source_title),
+                getString(R.string.image_source_description),
+                galleryCallback = {
+                    launcherGallery.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+                },
+                cameraCallback = {
+                    imageUri = requireContext().getImgUri()
+                    launcherCamera.launch(imageUri)
+                })
         }
 
     }

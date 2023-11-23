@@ -19,17 +19,20 @@ android {
     }
 
     buildTypes {
-        val APIKEY = gradleLocalProperties(rootDir).getProperty("api_key")
+        val movieApiKey = gradleLocalProperties(rootDir).getProperty("api_key")
+        val imgBBApiKey = gradleLocalProperties(rootDir).getProperty("img_bb_api_key")
         release {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            buildConfigField("String", "API_KEY", "\"$APIKEY\"")
+            buildConfigField("String", "API_KEY", "\"$movieApiKey\"")
+            buildConfigField("String", "IMG_BB_API_KEY", "\"$imgBBApiKey\"")
         }
         debug{
-            buildConfigField("String", "API_KEY", "\"$APIKEY\"")
+            buildConfigField("String", "API_KEY", "\"$movieApiKey\"")
+            buildConfigField("String", "IMG_BB_API_KEY", "\"$imgBBApiKey\"")
         }
     }
     compileOptions {

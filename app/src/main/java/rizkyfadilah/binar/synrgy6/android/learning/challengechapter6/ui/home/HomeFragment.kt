@@ -15,6 +15,7 @@ import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.databinding
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.ListMovieState
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.MovieAdapter
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.UserState
+import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.utils.loadUrl
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -51,6 +52,7 @@ class HomeFragment : Fragment() {
                 is UserState.Success -> {
                     val username = state.userData.username
                     binding.tvUsername.text = getString(R.string.greeting, username)
+                    binding.sivAvatar.loadUrl(state.userData.imageUrl)
                     showLoading(false)
                 }
             }
