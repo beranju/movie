@@ -13,6 +13,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -21,6 +22,7 @@ object DataModule {
 
     @Provides
     @Singleton
+    @Named("headerInterceptor")
     fun providesHeaderInterceptor(): Interceptor = Interceptor { chain ->
         val apiKey = BuildConfig.API_KEY
         val newRequest = chain.request().newBuilder()
@@ -32,14 +34,15 @@ object DataModule {
 
     @Provides
     @Singleton
+    @Named("loggingInterceptor")
     fun providesLoggingInterceptor(): Interceptor =
         HttpLoggingInterceptor().setLevel(if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE)
 
     @Provides
     @Singleton
     fun provideClient(
-        loggingInterceptor: HttpLoggingInterceptor,
-        headerInterceptor: Interceptor
+        @Named("loggingInterceptor") loggingInterceptor: Interceptor,
+        @Named("headerInterceptor") headerInterceptor: Interceptor
     ): OkHttpClient =
         OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)

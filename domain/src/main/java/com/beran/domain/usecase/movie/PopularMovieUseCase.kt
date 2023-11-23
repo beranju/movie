@@ -1,7 +1,6 @@
 package com.beran.domain.usecase.movie
 
 import com.beran.common.Resource
-import com.beran.data.network.utils.ApiException
 import com.beran.domain.model.MovieItem
 import com.beran.domain.repository.MovieRepository
 import kotlinx.coroutines.Dispatchers
@@ -16,8 +15,6 @@ class PopularMovieUseCase @Inject constructor(private val repository: MovieRepos
         try {
             val response = repository.getPopularMovies()
             emit(Resource.Success(response))
-        } catch (e: ApiException) {
-            emit(Resource.Error("An error when fetching data"))
         } catch (e: Exception) {
             emit(Resource.Error("An unexpected error occurred"))
         }

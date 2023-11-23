@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Movie Ku</string>
+    <string name="now_showing">Sedang Tayang</string>
+    <string name="popular">Populer</string>
+    <string name="app_title">Movies</string>
+    <string name="error_message">Terjadi kesalahan, coba lagi</string>
+    <string name="load_content">Memuat kontent</string>
+    <string name="hint_email">Masukkan email</string>
+    <string name="hint_password">Masukkan password</string>
+    <string name="login">Masuk</string>
+    <string name="no_account">Belum punya akun?</string>
+    <string name="register">Daftar</string>
+    <string name="hint_password_confirm">Masukkan ulang password</string>
+    <string name="hint_username">Masukkan username</string>
+    <string name="error_empty_field">Kolom isian tidak boleh kosong</string>
+    <string name="profile">Profil</string>
+    <string name="hint_full_name">Nama lengkap</string>
+    <string name="hint_birthday">Tanggal lahir</string>
+    <string name="hint_address">Alamat</string>
+    <string name="update">Simpan</string>
+    <string name="logout">Keluar</string>
+    <string name="confirm_logout">Apakah kamu yakin ingin keluar?</string>
+    <string name="no_update">Tidak ada yang di perbaharui</string>
+    <string name="desc_back_icon">Ikon kembali</string>
+    <string name="visit_site">Kunjungi laman</string>
+    <string name="overview_title">Deskripsi</string>
+    <string name="genres_title">Kategori</string>
+    <string name="hint_username_profile">Username</string>
+    <string name="success_login">Berhasil masuk</string>
+    <string name="error_password_length">Password minimal 6 karakter</string>
+    <string name="error_password_not_match">Password tidak sama</string>
+    <string name="error_password">Periksa kembali password</string>
+    <string name="success_register">Berhasil daftar</string>
+    <string name="greeting">Halo %1$s</string>
+</resources>

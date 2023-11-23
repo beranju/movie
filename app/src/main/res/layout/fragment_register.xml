@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/large_padding_margin"
+    tools:context=".ui.register.RegisterFragment">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/siv_illustration"
+        android:layout_width="131dp"
+        android:layout_height="108dp"
+        android:layout_marginTop="80dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/illustration_auth"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_name"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/medium_padding_margin"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="@dimen/medium_padding_margin"
+        android:hint="@string/hint_username"
+        app:layout_constraintEnd_toEndOf="@+id/siv_illustration"
+        app:layout_constraintStart_toStartOf="@+id/siv_illustration"
+        app:layout_constraintTop_toBottomOf="@+id/siv_illustration"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Small">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionNext" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_email"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/medium_padding_margin"
+        android:layout_marginTop="@dimen/large_padding_margin"
+        android:layout_marginEnd="@dimen/medium_padding_margin"
+        android:hint="@string/hint_email"
+        app:layout_constraintEnd_toEndOf="@+id/til_name"
+        app:layout_constraintStart_toStartOf="@+id/til_name"
+        app:layout_constraintTop_toBottomOf="@+id/til_name"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Small">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionNext"
+            android:inputType="textEmailAddress" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_password"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/medium_padding_margin"
+        android:layout_marginTop="@dimen/large_padding_margin"
+        android:layout_marginEnd="@dimen/medium_padding_margin"
+        android:hint="@string/hint_password"
+        app:endIconMode="password_toggle"
+        app:layout_constraintEnd_toEndOf="@+id/til_email"
+        app:layout_constraintStart_toStartOf="@+id/til_email"
+        app:layout_constraintTop_toBottomOf="@+id/til_email"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Small">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionNext"
+            android:inputType="textPassword" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_password_confirm"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/medium_padding_margin"
+        android:layout_marginTop="@dimen/large_padding_margin"
+        android:layout_marginEnd="@dimen/medium_padding_margin"
+        android:hint="@string/hint_password_confirm"
+        app:endIconMode="password_toggle"
+        app:layout_constraintEnd_toEndOf="@+id/til_password"
+        app:layout_constraintStart_toStartOf="@+id/til_password"
+        app:layout_constraintTop_toBottomOf="@+id/til_password"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Small">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_password_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionDone"
+            android:inputType="textPassword" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:text="@string/register"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="@+id/til_password_confirm"
+        app:layout_constraintStart_toStartOf="@+id/til_password_confirm"
+        app:layout_constraintTop_toBottomOf="@+id/til_password_confirm"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Small" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

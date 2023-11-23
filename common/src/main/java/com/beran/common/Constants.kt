@@ -17,4 +17,5 @@ object Constants {
     const val NAME_KEY = "name"
     const val BIRTHDAY_KEY = "birthday"
     const val ADDRESS_KEY = "address"
+    const val IMAGE_KEY = "image"
 }

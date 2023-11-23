@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.detail.DetailFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/large_padding_margin"
+        android:paddingBottom="24dp">
+
+        <LinearLayout
+            android:id="@+id/ll_app_Bar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/iv_navigate_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/large_padding_margin"
+                android:contentDescription="@string/desc_back_icon"
+                android:src="@drawable/ic_arrow_left" />
+
+            <TextView
+                android:id="@+id/tv_title"
+                style="@style/TitleTextView_20_bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:textAlignment="center"
+                tools:text="Thunder and lightning" />
+
+        </LinearLayout>
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/siv_thumbnail"
+            android:layout_width="250dp"
+            android:layout_height="300dp"
+            android:layout_marginTop="@dimen/large_padding_margin"
+            android:scaleType="fitXY"
+            app:layout_constraintEnd_toEndOf="@+id/ll_app_Bar"
+            app:layout_constraintStart_toStartOf="@+id/ll_app_Bar"
+            app:layout_constraintTop_toBottomOf="@+id/ll_app_Bar"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Large"
+            tools:src="@tools:sample/backgrounds/scenic" />
+
+        <RatingBar
+            android:id="@+id/rb_vote"
+            style="@style/Widget.AppCompat.RatingBar.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/large_padding_margin"
+            android:background="@android:color/transparent"
+            android:numStars="5"
+            android:progressTint="@android:color/holo_orange_dark"
+            android:stepSize="0.5"
+            app:layout_constraintEnd_toEndOf="@+id/siv_thumbnail"
+            app:layout_constraintHorizontal_bias="0.45"
+            app:layout_constraintStart_toStartOf="@+id/siv_thumbnail"
+            app:layout_constraintTop_toBottomOf="@+id/siv_thumbnail" />
+
+        <TextView
+            android:id="@+id/tv_rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/medium_padding_margin"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/rb_vote"
+            app:layout_constraintStart_toEndOf="@+id/rb_vote"
+            app:layout_constraintTop_toTopOf="@+id/rb_vote"
+            tools:text="7.8" />
+
+        <TextView
+            android:id="@+id/tv_overview_title"
+            style="@style/TitleTextView_20_bold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/large_padding_margin"
+            android:text="@string/overview_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rb_vote" />
+
+        <TextView
+            android:id="@+id/tv_overview_content"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_overview_title"
+            tools:text="A ticking-time-bomb insomniac and a slippery soap salesman channel primal male aggression into a shocking new form of therapy. Their concept catches on, with underground fight clubs forming in every town, until an eccentric gets in the way and ignites an out-of-control spiral toward oblivion." />
+
+
+        <TextView
+            android:id="@+id/tv_genre_title"
+            style="@style/TitleTextView_20_bold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/large_padding_margin"
+            android:text="@string/genres_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_overview_content" />
+
+        <TextView
+            android:id="@+id/tv_genre_content"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_genre_title"
+            tools:text="Action, comedi" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_site"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/large_padding_margin"
+            android:layout_marginBottom="@dimen/large_padding_margin"
+            android:text="@string/visit_site"
+            app:layout_constraintEnd_toEndOf="@+id/tv_genre_content"
+            app:layout_constraintTop_toBottomOf="@+id/tv_genre_content"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

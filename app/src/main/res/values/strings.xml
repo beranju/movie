@@ -1,3 +1,35 @@
 <resources>
-    <string name="app_name">Challenge Chapter 6</string>
+    <string name="app_name">Movie Ku</string>
+    <string name="now_showing">Now Showing</string>
+    <string name="popular">Popular</string>
+    <string name="app_title">Movies</string>
+    <string name="error_message">Something went wrong. try again</string>
+    <string name="load_content">Load content</string>
+    <string name="hint_email">Input email</string>
+    <string name="hint_password">Input password</string>
+    <string name="login">Login</string>
+    <string name="no_account">Didn\'t have account yet?</string>
+    <string name="register">Register</string>
+    <string name="hint_password_confirm">Re-Input password</string>
+    <string name="hint_username">Input username</string>
+    <string name="error_empty_field">The fields cannot be empty</string>
+    <string name="profile">Profile</string>
+    <string name="hint_full_name">Full name</string>
+    <string name="hint_birthday">Birthday</string>
+    <string name="hint_address">Address</string>
+    <string name="update">Update</string>
+    <string name="logout">Logout</string>
+    <string name="confirm_logout">are you sure you want to log out?</string>
+    <string name="no_update">Nothing to update</string>
+    <string name="desc_back_icon">Navigate back icon</string>
+    <string name="visit_site">Visit site</string>
+    <string name="overview_title">Overview</string>
+    <string name="genres_title">Genres</string>
+    <string name="hint_username_profile">Username</string>
+    <string name="success_login">Login was successful</string>
+    <string name="error_password_length">Password must be at least 6 characters</string>
+    <string name="error_password_not_match">passwords do not match</string>
+    <string name="error_password">Please check your password</string>
+    <string name="success_register">registration was successful</string>
+    <string name="greeting">Hello %1$s</string>
 </resources>

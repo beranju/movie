@@ -1,17 +1,15 @@
 package com.beran.domain.repository
 
-import com.beran.data.local.pref.SessionManager
+import com.beran.domain.model.UserData
 import kotlinx.coroutines.flow.Flow
-import java.util.prefs.Preferences
-import javax.inject.Inject
 
 interface AuthRepository{
     fun isLogin(): Flow<Boolean>
     suspend fun createSession()
 
-    fun getSavedData(keyName: String): Flow<String>
+    fun getSavedData(): Flow<UserData>
 
-    suspend fun saveData(keyName: String, value: String)
+    suspend fun saveUser(userData: UserData)
 
     suspend fun logOut()
 }

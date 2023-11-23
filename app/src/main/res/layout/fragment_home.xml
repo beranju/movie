@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/medium_padding_margin"
+    tools:context=".ui.home.HomeFragment">
+
+    <LinearLayout
+        android:id="@+id/ll_app_Bar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_username"
+            style="@style/TitleTextView_24_bold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/medium_padding_margin"
+            android:layout_weight="1"
+            tools:text="@string/app_title" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/siv_avatar"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_avatar"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView"
+        style="@style/TitleTextView_18_bold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/medium_padding_margin"
+        android:text="@string/now_showing"
+        app:layout_constraintEnd_toEndOf="@+id/ll_app_Bar"
+        app:layout_constraintStart_toStartOf="@+id/ll_app_Bar"
+        app:layout_constraintTop_toBottomOf="@+id/ll_app_Bar" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_movie_now"
+        android:layout_width="0dp"
+        android:layout_height="260dp"
+        android:layout_marginTop="@dimen/medium_padding_margin"
+        android:orientation="horizontal"
+        android:visibility="visible"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        tools:listitem="@layout/item_movie_upcoming" />
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/sfl_now_movies"
+        android:layout_width="match_parent"
+        android:layout_height="260dp"
+        android:layout_marginTop="@dimen/medium_padding_margin"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <include layout="@layout/item_now_movie_shimmer" />
+
+            <include layout="@layout/item_now_movie_shimmer" />
+        </LinearLayout>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_error_now"
+        android:layout_width="match_parent"
+        android:layout_height="260dp"
+        android:layout_marginTop="@dimen/medium_padding_margin"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView">
+
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:src="@drawable/ic_error" />
+
+        <TextView
+            android:id="@+id/tv_message_now"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/error_message" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView1"
+        style="@style/TitleTextView_18_bold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="292dp"
+        android:text="@string/popular"
+        app:layout_constraintEnd_toEndOf="@+id/rv_movie_now"
+        app:layout_constraintStart_toStartOf="@+id/rv_movie_now"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_movie"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/medium_padding_margin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView1"
+        tools:listitem="@layout/item_movie" />
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/sfl_pop_movies"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/medium_padding_margin"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <include layout="@layout/item_movie_shimmer" />
+
+            <include layout="@layout/item_movie_shimmer" />
+
+            <include layout="@layout/item_movie_shimmer" />
+        </LinearLayout>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_error_pop"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/medium_padding_margin"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView1">
+
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:src="@drawable/ic_error" />
+
+        <TextView
+            android:id="@+id/tv_message_pop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/error_message" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
