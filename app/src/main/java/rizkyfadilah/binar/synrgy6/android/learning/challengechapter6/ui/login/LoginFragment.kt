@@ -1,6 +1,7 @@
 package rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.login
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,12 +15,14 @@ import com.beran.data.local.pref.SessionManager
 import com.beran.data.utils.dataStore
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.R
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.databinding.FragmentLoginBinding
+import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.AuthState
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.profile.SharedAuthViewModel
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.utils.showToast
 
@@ -31,6 +34,24 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel.sessionState.observe(viewLifecycleOwner){state ->
+            when(state){
+                is AuthState.Loading -> {
+                    binding.btnLogin.isEnabled = false
+                }
+                is AuthState.Error -> {
+                    requireContext().showToast(getString(R.string.login_failed_try_again))
+                }
+                is AuthState.Success -> {
+                    val navOption = NavOptions.Builder()
+                        .setPopUpTo(R.id.loginFragment, inclusive = true)
+                        .build()
+                    findNavController().navigate(R.id.homeFragment, null, navOption)
+                    requireContext().showToast(getString(R.string.success_login))
+                }
+            }
+        }
 
         binding.etPassword.doOnTextChanged { text, _, _, _ ->
             if (text != null) {
@@ -50,11 +71,6 @@ class LoginFragment : Fragment() {
             } else {
                 lifecycleScope.launch {
                     viewModel.createSession()
-                    val navOption = NavOptions.Builder()
-                        .setPopUpTo(R.id.loginFragment, inclusive = true)
-                        .build()
-                    findNavController().navigate(R.id.homeFragment, null, navOption)
-                    requireContext().showToast(getString(R.string.success_login))
                 }
             }
         }
@@ -70,6 +86,7 @@ class LoginFragment : Fragment() {
             val isLogin =
                 requireContext().dataStore.data.map { it[SessionManager.KEY_LOGIN] ?: false }
                     .first()
+            Log.d("LoginFragment", "isLogin: $isLogin")
             if (isLogin) {
                 val navOptions = NavOptions.Builder()
                     .setPopUpTo(R.id.loginFragment, true)

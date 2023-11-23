@@ -18,4 +18,8 @@ object Constants {
     const val BIRTHDAY_KEY = "birthday"
     const val ADDRESS_KEY = "address"
     const val IMAGE_KEY = "image"
+
+    // IMAGE CONSTANTS
+    const val FILE_NAME_FORMAT = "yyyyMMdd_HHmmss"
+
 }

@@ -106,6 +106,7 @@ class HomeFragment : Fragment() {
 
     private fun showLoading(isLoading: Boolean) {
         binding.sflNowMovies.visibility = if (isLoading) View.VISIBLE else View.GONE
+        binding.sflPopMovies.visibility = if (isLoading) View.VISIBLE else View.GONE
         binding.rvMovieNow.visibility = if (isLoading) View.GONE else View.VISIBLE
         binding.rvMovie.visibility = if (isLoading) View.GONE else View.VISIBLE
     }

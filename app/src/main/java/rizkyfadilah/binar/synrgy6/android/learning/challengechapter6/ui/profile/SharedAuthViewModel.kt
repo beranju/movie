@@ -8,6 +8,7 @@ import com.beran.common.Resource
 import com.beran.domain.model.UserData
 import com.beran.domain.usecase.auth.CreateSessionUseCase
 import com.beran.domain.usecase.auth.GetSavedDataUseCase
+import com.beran.domain.usecase.auth.LogOutUseCase
 import com.beran.domain.usecase.auth.SaveDataProfileUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.cancel
@@ -22,6 +23,7 @@ class SharedAuthViewModel @Inject constructor(
     private val savedDataUseCase: SaveDataProfileUseCase,
     private val getSavedDataUseCase: GetSavedDataUseCase,
     private val createSessionUseCase: CreateSessionUseCase,
+    private val logOutUseCase: LogOutUseCase
 ) : ViewModel() {
 
     private var _userState = MutableLiveData<UserState>()
@@ -32,6 +34,9 @@ class SharedAuthViewModel @Inject constructor(
 
     private var _saveDataState = MutableLiveData<AuthState>()
     val saveDataState: LiveData<AuthState> get() = _saveDataState
+
+    private var _logOutState = MutableLiveData<AuthState>()
+    val logOutState: LiveData<AuthState> get() = _logOutState
 
     init {
         getSavedData()
@@ -58,7 +63,7 @@ class SharedAuthViewModel @Inject constructor(
         }.launchIn(viewModelScope)
 
 
-    fun createSession() =
+    fun createSession() {
         createSessionUseCase.invoke().onEach { result ->
             when (result) {
                 is Resource.Loading -> _sessionState.value = AuthState.Loading
@@ -66,6 +71,17 @@ class SharedAuthViewModel @Inject constructor(
                 is Resource.Success -> _sessionState.value = AuthState.Success
             }
         }.launchIn(viewModelScope)
+    }
+
+    fun logOut(){
+        logOutUseCase().onEach { result ->
+            when (result) {
+                is Resource.Loading -> _logOutState.value = AuthState.Loading
+                is Resource.Error -> _logOutState.value = AuthState.Error(result.error)
+                is Resource.Success -> _logOutState.value = AuthState.Success
+            }
+        }.launchIn(viewModelScope)
+    }
 
     override fun onCleared() {
         super.onCleared()

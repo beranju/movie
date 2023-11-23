@@ -15,6 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.R
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.databinding.FragmentRegisterBinding
+import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.AuthState
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.profile.SharedAuthViewModel
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.utils.showToast
 
@@ -26,6 +27,22 @@ class RegisterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel.sessionState.observe(viewLifecycleOwner){state ->
+            when(state){
+                is AuthState.Loading -> {
+                    binding.btnRegister.isEnabled = false
+                }
+                is AuthState.Error -> {
+                    requireContext().showToast(getString(R.string.register_failed_try_again))
+                }
+                is AuthState.Success -> {
+                    findNavController().popBackStack(R.id.loginFragment, true)
+                    findNavController().navigate(R.id.homeFragment)
+                    requireContext().showToast(getString(R.string.success_register))
+                }
+            }
+        }
 
         binding.etPasswordConfirm.doAfterTextChanged {
             val password = binding.etPassword.text.toString().trim()
@@ -63,9 +80,6 @@ class RegisterFragment : Fragment() {
                     )
                     viewModel.saveData(user)
                     viewModel.createSession()
-                    findNavController().popBackStack(R.id.loginFragment, true)
-                    findNavController().navigate(R.id.homeFragment)
-                    requireContext().showToast(getString(R.string.success_register))
                 }
             }
         }
