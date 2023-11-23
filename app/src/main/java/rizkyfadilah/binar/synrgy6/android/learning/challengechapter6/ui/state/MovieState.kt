@@ -1,4 +1,4 @@
-package rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui
+package rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.state
 
 import com.beran.domain.model.MovieDetail
 

@@ -12,8 +12,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.ListMovieState
-import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.UserState
+import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.state.ListMovieState
+import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.state.UserState
 import javax.inject.Inject
 
 @HiltViewModel

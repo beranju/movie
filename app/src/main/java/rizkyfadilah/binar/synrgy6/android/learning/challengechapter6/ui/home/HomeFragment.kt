@@ -12,9 +12,9 @@ import com.beran.common.Constants.POP_MOVIE_TYPE
 import dagger.hilt.android.AndroidEntryPoint
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.R
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.databinding.FragmentHomeBinding
-import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.ListMovieState
+import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.state.ListMovieState
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.MovieAdapter
-import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.UserState
+import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.state.UserState
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.utils.loadUrl
 
 @AndroidEntryPoint

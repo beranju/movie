@@ -1,9 +1,16 @@
 package rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.profile
 
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.work.Data
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkInfo
+import androidx.work.WorkManager
+import com.beran.common.Constants.KEY_IMAGE_URI
+import com.beran.common.Constants.TAG_OUTPUT
 import com.beran.common.Resource
 import com.beran.domain.model.UserData
 import com.beran.domain.usecase.auth.CreateSessionUseCase
@@ -15,9 +22,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.AuthState
-import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.UploadState
-import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.UserState
+import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.state.AuthState
+import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.state.UploadState
+import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.state.UserState
+import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.worker.BlurWorker
 import java.io.File
 import javax.inject.Inject
 
@@ -27,7 +35,8 @@ class SharedAuthViewModel @Inject constructor(
     private val getSavedDataUseCase: GetSavedDataUseCase,
     private val createSessionUseCase: CreateSessionUseCase,
     private val logOutUseCase: LogOutUseCase,
-    private val uploadPhotoUseCase: UploadPhotoUseCase
+    private val uploadPhotoUseCase: UploadPhotoUseCase,
+    private val workManager: WorkManager
 ) : ViewModel() {
 
     private var _userState = MutableLiveData<UserState>()
@@ -45,8 +54,11 @@ class SharedAuthViewModel @Inject constructor(
     private var _uploadState = MutableLiveData<UploadState>()
     val uploadState: LiveData<UploadState> get() = _uploadState
 
+    val outputWorkInfos: LiveData<List<WorkInfo>>
+
     init {
         getSavedData()
+        outputWorkInfos = workManager.getWorkInfosByTagLiveData(TAG_OUTPUT)
     }
 
     private fun getSavedData() =
@@ -80,7 +92,7 @@ class SharedAuthViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    fun uploadPhoto(file: File){
+    fun uploadPhoto(file: File) {
         uploadPhotoUseCase.invoke(file).onEach { result ->
             when (result) {
                 is Resource.Loading -> _uploadState.value = UploadState.Loading
@@ -90,7 +102,18 @@ class SharedAuthViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    fun logOut(){
+    fun blurImage(uri: Uri){
+        val imageUri = Data.Builder()
+            .putString(KEY_IMAGE_URI, uri.toString())
+            .build()
+        val blurRequest = OneTimeWorkRequestBuilder<BlurWorker>()
+            .setInputData(imageUri)
+            .addTag(TAG_OUTPUT)
+            .build()
+        workManager.enqueue(blurRequest)
+    }
+
+    fun logOut() {
         logOutUseCase().onEach { result ->
             when (result) {
                 is Resource.Loading -> _logOutState.value = AuthState.Loading

@@ -10,7 +10,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.MovieState
+import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.state.MovieState
 import javax.inject.Inject
 
 @HiltViewModel

@@ -13,14 +13,15 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.beran.common.Constants.KEY_IMAGE_URI
 import com.beran.domain.model.UserData
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.R
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.databinding.FragmentProfileBinding
-import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.AuthState
-import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.UploadState
-import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.UserState
+import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.state.AuthState
+import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.state.UploadState
+import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.state.UserState
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.utils.getImgUri
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.utils.loadUrl
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.utils.showAlert
@@ -69,6 +70,23 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel.outputWorkInfos.observe(viewLifecycleOwner){listOfWorkInfo ->
+            if (listOfWorkInfo.isEmpty()) return@observe
+            val workInfo = listOfWorkInfo[0]
+            if (workInfo.state.isFinished){
+                // show finish
+                requireContext().showToast("Blur image is finished")
+                val outputImageUri = workInfo.outputData.getString(KEY_IMAGE_URI)
+                val blurFile = requireContext().uriToTempFile(Uri.parse(outputImageUri))
+                if (blurFile != null){
+                    viewModel.uploadPhoto(blurFile)
+                }
+            }else{
+                // show progress
+                requireContext().showToast("Blur image is progress")
+            }
+        }
 
         viewModel.uploadState.observe(viewLifecycleOwner) { state ->
             when (state) {
@@ -209,7 +227,8 @@ class ProfileFragment : Fragment() {
                     imageUri?.let {
                         val imageFile = requireContext().uriToTempFile(imageUri!!)
                         if (imageFile != null) {
-                            viewModel.uploadPhoto(imageFile)
+//                            viewModel.uploadPhoto(imageFile)
+                            viewModel.blurImage(imageUri!!)
                         }
                     }
                 } else {

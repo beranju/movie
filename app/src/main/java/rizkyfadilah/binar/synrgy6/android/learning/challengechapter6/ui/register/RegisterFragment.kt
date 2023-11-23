@@ -15,7 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.R
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.databinding.FragmentRegisterBinding
-import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.AuthState
+import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.state.AuthState
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.profile.SharedAuthViewModel
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.utils.showToast
 

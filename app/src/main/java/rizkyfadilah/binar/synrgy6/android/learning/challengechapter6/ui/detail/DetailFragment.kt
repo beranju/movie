@@ -12,10 +12,9 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.lifecycle.HiltViewModel
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.R
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.databinding.FragmentDetailBinding
-import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.MovieState
+import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.state.MovieState
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.utils.loadUrl
 
 @AndroidEntryPoint

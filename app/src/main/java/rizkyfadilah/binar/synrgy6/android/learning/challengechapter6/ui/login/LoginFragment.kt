@@ -14,15 +14,13 @@ import androidx.navigation.fragment.findNavController
 import com.beran.data.local.pref.SessionManager
 import com.beran.data.utils.dataStore
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.R
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.databinding.FragmentLoginBinding
-import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.AuthState
+import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.state.AuthState
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.profile.SharedAuthViewModel
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.utils.showToast
 

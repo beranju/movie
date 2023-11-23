@@ -23,4 +23,9 @@ object Constants {
     // IMAGE CONSTANTS
     const val FILE_NAME_FORMAT = "yyyyMMdd_HHmmss"
 
+    // WORKER CONSTANTS
+    const val OUTPUT_PATH = "blur_filter_outputs"
+    const val KEY_IMAGE_URI = "image_uri"
+    const val TAG_OUTPUT = "OUTPUT"
+
 }
