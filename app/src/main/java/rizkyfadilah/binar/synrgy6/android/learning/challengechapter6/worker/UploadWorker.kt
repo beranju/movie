@@ -11,6 +11,7 @@ import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import com.beran.common.Constants
 import com.beran.common.Constants.KEY_IMAGE_URI
+import com.beran.common.Constants.PROGRESS
 import com.beran.common.Resource
 import com.beran.domain.usecase.auth.UploadPhotoUseCase
 import dagger.assisted.Assisted
@@ -18,6 +19,7 @@ import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.withContext
+import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.R
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.utils.uriToTempFile
 
 private const val TAG = "UploadWorker"
@@ -34,7 +36,7 @@ class UploadWorker @AssistedInject constructor(
         var loading: Boolean = false
         var error: String? = null
         var imgUrl: String = ""
-        makeStatusNotification("Uploading photo profile", applicationContext)
+        makeStatusNotification(context.getString(R.string.upload_worker_notify_message), applicationContext)
         sleep()
         try {
             if (TextUtils.isEmpty(imageUri.toString())) {
@@ -59,14 +61,13 @@ class UploadWorker @AssistedInject constructor(
                             loading = false
                             error = null
                             imgUrl = result.data
-                            Log.d(TAG, "url : ${result.data}")
                         }
                     }
                 }
             }
             if (loading) {
                 (0..100 step 10).forEach {
-                    setProgressAsync(workDataOf("PROGRESS" to it))
+                    setProgressAsync(workDataOf(PROGRESS to it))
                     sleep()
                 }
             }

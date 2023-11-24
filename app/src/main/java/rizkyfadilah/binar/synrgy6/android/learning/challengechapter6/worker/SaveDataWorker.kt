@@ -8,6 +8,7 @@ import androidx.work.Worker
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import com.beran.common.Constants.KEY_IMAGE_URI
+import com.beran.common.Constants.PROGRESS
 import com.beran.common.Resource
 import com.beran.domain.model.UserData
 import com.beran.domain.usecase.auth.SaveDataProfileUseCase
@@ -57,7 +58,7 @@ class SaveDataWorker @AssistedInject constructor(
             }
             if (loading) {
                 (0..100 step 10).forEach {
-                    setProgressAsync(workDataOf("PROGRESS" to it))
+                    setProgressAsync(workDataOf(PROGRESS to it))
                     sleep()
                 }
             }

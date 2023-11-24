@@ -8,6 +8,7 @@ import androidx.work.WorkerParameters
 import com.beran.common.Constants.OUTPUT_PATH
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
+import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.R
 import java.io.File
 
 @HiltWorker
@@ -18,8 +19,9 @@ class CleanupWorker @AssistedInject constructor(
     Worker(ctx, params) {
 
     override fun doWork(): Result {
+        val context = applicationContext
 
-        makeStatusNotification("Cleaning up old temporary files", applicationContext)
+        makeStatusNotification(context.getString(R.string.clean_worker_notify_message), applicationContext)
         sleep()
 
         return try {

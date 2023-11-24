@@ -14,6 +14,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.work.WorkInfo
+import com.beran.common.Constants.PROGRESS
 import com.beran.domain.model.UserData
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -26,7 +27,6 @@ import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.utils.loadU
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.utils.showAlert
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.utils.showCameraOptions
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.utils.showToast
-import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.worker.makeStatusNotification
 import java.util.Calendar
 
 @AndroidEntryPoint
@@ -75,7 +75,8 @@ class ProfileFragment : Fragment() {
             if (listOfWorkInfo.isEmpty()) return@observe
             listOfWorkInfo.forEach { workInfo ->
                 if (WorkInfo.State.SUCCEEDED == workInfo.state) {
-                    binding.llLoading.visibility = View.GONE
+                    binding.llUploadProgress.visibility = View.GONE
+                    binding.tvDescProgress.visibility = View.GONE
                 }
             }
         }
@@ -83,15 +84,22 @@ class ProfileFragment : Fragment() {
             if (listOfWorkInfo.isEmpty()) return@observe
             listOfWorkInfo.forEach { workInfo ->
                 if (WorkInfo.State.RUNNING == workInfo.state) {
-//                    binding.llLoading.visibility =
-//                        if (WorkInfo.State.RUNNING == workInfo.state) View.VISIBLE else View.GONE
-//                    val progress = workInfo.progress.getInt("PROGRESS", 0)
-//                    binding.lpiLoading.progress = progress
-//                    binding.tvMessageLoading.text = "Updating image..."
-                    binding.llUploadProgress.visibility = if (WorkInfo.State.RUNNING == workInfo.state) View.VISIBLE else View.GONE
-                    binding.tvDescProgress.visibility = if (WorkInfo.State.RUNNING == workInfo.state) View.VISIBLE else View.GONE
+                    val progress = workInfo.progress.getInt(PROGRESS, 0)
+                    binding.lpiUploadProgress.progress = progress
+                    binding.llUploadProgress.visibility =
+                        if (WorkInfo.State.RUNNING == workInfo.state) View.VISIBLE else View.GONE
+                    binding.tvDescProgress.visibility =
+                        if (WorkInfo.State.RUNNING == workInfo.state) View.VISIBLE else View.GONE
                     binding.ivCancleProgress.setOnClickListener {
-                        viewModel.cancelBlur()
+                        requireContext().showAlert(
+                            getString(R.string.cancel_upload),
+                            getString(R.string.are_you_sure_to_cancel_updating_photo),
+                            positiveCallback =
+                            {
+                                it.dismiss()
+                                viewModel.cancelBlur()
+                            }
+                        )
                     }
                 }
             }
@@ -133,19 +141,18 @@ class ProfileFragment : Fragment() {
                 is AuthState.Loading -> {
                     binding.btnLogout.isEnabled = false
                     binding.llLoading.visibility = View.VISIBLE
-                    binding.tvMessageLoading.text = "Saving data..."
+                    binding.tvMessageLoading.text = getString(R.string.saving_data)
                 }
 
                 is AuthState.Error -> {
                     binding.btnLogout.isEnabled = true
                     binding.llLoading.visibility = View.GONE
-                    requireContext().showToast("Save data failed, try again!")
+                    requireContext().showToast(getString(R.string.save_data_failed_try_again))
                 }
 
                 is AuthState.Success -> {
                     binding.btnLogout.isEnabled = true
                     binding.llLoading.visibility = View.GONE
-//                    requireContext().showToast("Update data successfully")
                 }
             }
         }
@@ -206,7 +213,6 @@ class ProfileFragment : Fragment() {
             if (username != newUsername || name != newName || birthday != newBirthday || address != newAddress || imageUri != null) {
                 if (imageUri != null) {
                     imageUri?.let {
-//                        viewModel.cancelBlur()
                         viewModel.blurImage(imageUri!!)
                     }
                 }

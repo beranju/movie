@@ -10,8 +10,10 @@ import androidx.work.Worker
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import com.beran.common.Constants.KEY_IMAGE_URI
+import com.beran.common.Constants.PROGRESS
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
+import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.R
 
 private const val TAG = "BlurWorker"
 
@@ -24,9 +26,9 @@ class BlurWorker @AssistedInject constructor(
     override fun doWork(): Result {
         val context = applicationContext
         val imageUri = inputData.getString(KEY_IMAGE_URI)
-        makeStatusNotification("Blurring image", context)
+        makeStatusNotification(context.getString(R.string.blur_worker_notify_blurring_image), context)
         (0..100 step 10).forEach {
-            setProgressAsync(workDataOf("PROGRESS" to it))
+            setProgressAsync(workDataOf(PROGRESS to it))
             sleep()
         }
 

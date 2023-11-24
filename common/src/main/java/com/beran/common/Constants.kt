@@ -38,6 +38,7 @@ object Constants {
     const val KEY_IMAGE_URI = "image_uri"
     const val TAG_OUTPUT = "OUTPUT"
     const val TAG_PROGRESS = "TAG_PROGRESS"
+    const val PROGRESS = "PROGRESS"
     const val DELAY_TIME_MILLIS: Long = 1000
 
 }
