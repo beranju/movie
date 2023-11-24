@@ -57,7 +57,10 @@ class SessionManager(private val dataStore: DataStore<Preferences>) {
         it[KEY_USERNAME] = userData.username
         it[KEY_BIRTHDAY] = userData.birthDay
         it[KEY_ADDRESS] = userData.address
-        it[KEY_IMAGE] = userData.imageUrl
+    }
+
+    suspend fun updateUserImage(url: String) = dataStore.edit {
+        it[KEY_IMAGE] = url
     }
 
     suspend fun logout() {

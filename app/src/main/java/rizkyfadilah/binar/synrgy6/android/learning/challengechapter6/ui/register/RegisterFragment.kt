@@ -15,6 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.R
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.databinding.FragmentRegisterBinding
+import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.login.LoginViewModel
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.state.AuthState
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.profile.SharedAuthViewModel
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.utils.showToast
@@ -23,7 +24,7 @@ import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.utils.showT
 class RegisterFragment : Fragment() {
     private var _binding: FragmentRegisterBinding? = null
     private val binding get() = _binding!!
-    private val viewModel by viewModels<SharedAuthViewModel>()
+    private val viewModel by viewModels<LoginViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

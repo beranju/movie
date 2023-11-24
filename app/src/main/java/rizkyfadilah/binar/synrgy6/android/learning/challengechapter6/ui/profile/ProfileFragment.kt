@@ -13,21 +13,20 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.beran.common.Constants.KEY_IMAGE_URI
+import androidx.work.WorkInfo
 import com.beran.domain.model.UserData
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.R
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.databinding.FragmentProfileBinding
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.state.AuthState
-import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.state.UploadState
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.state.UserState
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.utils.getImgUri
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.utils.loadUrl
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.utils.showAlert
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.utils.showCameraOptions
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.utils.showToast
-import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.utils.uriToTempFile
+import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.worker.makeStatusNotification
 import java.util.Calendar
 
 @AndroidEntryPoint
@@ -65,64 +64,42 @@ class ProfileFragment : Fragment() {
             binding.sivProfile.setImageURI(imageUri)
         } else if (photoProfile.isNotEmpty()) {
             binding.sivProfile.loadUrl(photoProfile)
-        }
+        } else
+            binding.sivProfile.setImageResource(R.drawable.ic_avatar)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.outputWorkInfos.observe(viewLifecycleOwner){listOfWorkInfo ->
+        viewModel.outputWorkInfos.observe(viewLifecycleOwner) { listOfWorkInfo ->
             if (listOfWorkInfo.isEmpty()) return@observe
-            val workInfo = listOfWorkInfo[0]
-            if (workInfo.state.isFinished){
-                // show finish
-                requireContext().showToast("Blur image is finished")
-                val outputImageUri = workInfo.outputData.getString(KEY_IMAGE_URI)
-                val blurFile = requireContext().uriToTempFile(Uri.parse(outputImageUri))
-                if (blurFile != null){
-                    viewModel.uploadPhoto(blurFile)
+            listOfWorkInfo.forEach { workInfo ->
+                if (WorkInfo.State.SUCCEEDED == workInfo.state) {
+                    binding.llLoading.visibility = View.GONE
                 }
-            }else{
-                // show progress
-                requireContext().showToast("Blur image is progress")
             }
         }
-
-        viewModel.uploadState.observe(viewLifecycleOwner) { state ->
-            when (state) {
-                is UploadState.Loading ->
-                    binding.btnUpdate.isEnabled = false
-
-                is UploadState.Error -> {
-                    binding.btnUpdate.isEnabled = true
-                    requireContext().showToast("Upload failed, try again")
-                }
-
-                is UploadState.Success -> {
-                    binding.btnUpdate.isEnabled = true
-                    val newUsername = binding.tieUsername.text.toString().trim()
-                    val newName = binding.tieName.text.toString().trim()
-                    val newBirthday = binding.tieBirthday.text.toString().trim()
-                    val newAddress = binding.tieAddress.text.toString().trim()
-                    val newImageUrl = state.url
-                    val user = UserData(
-                        name = newName,
-                        username = newUsername,
-                        birthDay = newBirthday,
-                        address = newAddress,
-                        imageUrl = newImageUrl
-                    )
-                    viewModel.saveData(user)
-                    requireContext().showToast(getString(R.string.update_profile_successfully))
+        viewModel.progressWorkInfos.observe(viewLifecycleOwner) { listOfWorkInfo ->
+            if (listOfWorkInfo.isEmpty()) return@observe
+            listOfWorkInfo.forEach { workInfo ->
+                if (WorkInfo.State.RUNNING == workInfo.state) {
+//                    binding.llLoading.visibility =
+//                        if (WorkInfo.State.RUNNING == workInfo.state) View.VISIBLE else View.GONE
+//                    val progress = workInfo.progress.getInt("PROGRESS", 0)
+//                    binding.lpiLoading.progress = progress
+//                    binding.tvMessageLoading.text = "Updating image..."
+                    binding.llUploadProgress.visibility = if (WorkInfo.State.RUNNING == workInfo.state) View.VISIBLE else View.GONE
+                    binding.tvDescProgress.visibility = if (WorkInfo.State.RUNNING == workInfo.state) View.VISIBLE else View.GONE
+                    binding.ivCancleProgress.setOnClickListener {
+                        viewModel.cancelBlur()
+                    }
                 }
             }
         }
 
         viewModel.userState.observe(viewLifecycleOwner) { state ->
             when (state) {
-                is UserState.Loading ->
-                    binding.btnUpdate.isEnabled = false
-
+                is UserState.Loading -> {}
                 is UserState.Error -> {
                     binding.btnUpdate.isEnabled = true
                     Toast.makeText(
@@ -151,6 +128,28 @@ class ProfileFragment : Fragment() {
             }
         }
 
+        viewModel.saveDataState.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is AuthState.Loading -> {
+                    binding.btnLogout.isEnabled = false
+                    binding.llLoading.visibility = View.VISIBLE
+                    binding.tvMessageLoading.text = "Saving data..."
+                }
+
+                is AuthState.Error -> {
+                    binding.btnLogout.isEnabled = true
+                    binding.llLoading.visibility = View.GONE
+                    requireContext().showToast("Save data failed, try again!")
+                }
+
+                is AuthState.Success -> {
+                    binding.btnLogout.isEnabled = true
+                    binding.llLoading.visibility = View.GONE
+//                    requireContext().showToast("Update data successfully")
+                }
+            }
+        }
+
         viewModel.logOutState.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is AuthState.Loading -> {
@@ -165,24 +164,6 @@ class ProfileFragment : Fragment() {
                 is AuthState.Success -> {
                     findNavController().popBackStack(R.id.homeFragment, true)
                     findNavController().navigate(R.id.loginFragment)
-                }
-            }
-        }
-
-        viewModel.saveDataState.observe(viewLifecycleOwner) { state ->
-            when (state) {
-                is AuthState.Loading -> {
-                    binding.btnLogout.isEnabled = false
-                }
-
-                is AuthState.Error -> {
-                    binding.btnLogout.isEnabled = true
-                    requireContext().showToast("Save data failed, try again!")
-                }
-
-                is AuthState.Success -> {
-                    binding.btnLogout.isEnabled = true
-                    requireContext().showToast("Update data successfully")
                 }
             }
         }
@@ -225,23 +206,18 @@ class ProfileFragment : Fragment() {
             if (username != newUsername || name != newName || birthday != newBirthday || address != newAddress || imageUri != null) {
                 if (imageUri != null) {
                     imageUri?.let {
-                        val imageFile = requireContext().uriToTempFile(imageUri!!)
-                        if (imageFile != null) {
-//                            viewModel.uploadPhoto(imageFile)
-                            viewModel.blurImage(imageUri!!)
-                        }
+//                        viewModel.cancelBlur()
+                        viewModel.blurImage(imageUri!!)
                     }
-                } else {
-                    val user = UserData(
-                        name = newName,
-                        username = newUsername,
-                        birthDay = newBirthday,
-                        address = newAddress,
-                        imageUrl = photoProfile
-                    )
-                    viewModel.saveData(user)
-                    requireContext().showToast(getString(R.string.update_profile_successfully))
                 }
+                val user = UserData(
+                    name = newName,
+                    username = newUsername,
+                    birthDay = newBirthday,
+                    address = newAddress,
+                    imageUrl = imageUri.toString()
+                )
+                viewModel.saveData(user)
             } else {
                 requireContext().showToast(getString(R.string.no_update))
             }

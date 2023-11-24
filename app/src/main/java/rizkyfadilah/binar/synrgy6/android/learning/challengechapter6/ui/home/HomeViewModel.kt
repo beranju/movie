@@ -38,7 +38,7 @@ class HomeViewModel @Inject constructor(
         getSavedData()
     }
 
-    private fun getSavedData() {
+    fun getSavedData() {
         getSavedDataUseCase.invoke().onEach { result ->
             when (result) {
                 is Resource.Loading -> _userState.value = UserState.Loading

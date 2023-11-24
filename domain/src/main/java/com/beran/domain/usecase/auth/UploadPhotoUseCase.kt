@@ -1,5 +1,6 @@
 package com.beran.domain.usecase.auth
 
+import android.util.Log
 import com.beran.common.Resource
 import com.beran.domain.repository.AuthRepository
 import kotlinx.coroutines.flow.Flow
@@ -12,6 +13,7 @@ class UploadPhotoUseCase @Inject constructor(private val repository: AuthReposit
         emit(Resource.Loading)
         try {
             val result = repository.uploadPhoto(file)
+            Log.d("UploadPhotoUseCase", "result: $result")
             emit(Resource.Success(result))
         } catch (e: Exception) {
             emit(Resource.Error(e.localizedMessage ?: "An unexpected error occurred"))

@@ -11,11 +11,17 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.beran.common.Constants.IMG_BASE_URL
 import dagger.hilt.android.AndroidEntryPoint
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.R
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.databinding.FragmentDetailBinding
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.state.MovieState
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.utils.loadUrl
+
+/**
+ * TODO
+ * add bookmark icon beside the button visit to save the movie
+ */
 
 @AndroidEntryPoint
 class DetailFragment : Fragment() {
@@ -59,12 +65,14 @@ class DetailFragment : Fragment() {
                             data.genres.replace("[", "").replace("]", "")
                         rbVote.rating = rating ?: 0f
                         tvRate.text = String.format("%.1f", rating)
-                        sivThumbnail.loadUrl(data.posterPath.orEmpty())
+                        sivThumbnail.loadUrl(IMG_BASE_URL+data.posterPath.orEmpty())
                         btnSite.setOnClickListener {
                             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(data.homepage)))
                         }
                     }
                 }
+
+                else -> {}
             }
         }
         binding.ivNavigateBack.setOnClickListener {
@@ -77,6 +85,8 @@ class DetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        val id= args.id
+        viewModel.getDetailMovie(id)
         _binding = FragmentDetailBinding.inflate(inflater, container, false)
         return binding.root
     }

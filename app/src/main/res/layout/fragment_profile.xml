@@ -5,10 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.profile.ProfileFragment">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="24dp">
+
         <TextView
             android:id="@+id/tv_page_title"
             android:layout_width="match_parent"
@@ -38,24 +40,62 @@
             android:id="@+id/siv_add_photo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:elevation="1dp"
             android:background="@drawable/bg_circle_button"
+            android:elevation="1dp"
+            android:padding="8dp"
             android:src="@drawable/ic_photo_camera"
             app:layout_constraintBottom_toBottomOf="@+id/siv_profile"
             app:layout_constraintEnd_toEndOf="@+id/siv_profile"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="@+id/siv_profile"
             app:layout_constraintTop_toTopOf="@+id/siv_profile"
-            app:layout_constraintVertical_bias="0.90999997"
-            />
+            app:layout_constraintVertical_bias="0.90999997" />
+
+        <LinearLayout
+            android:id="@+id/ll_upload_progress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            android:paddingHorizontal="24dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/siv_profile"
+            app:layout_constraintStart_toStartOf="@+id/siv_profile"
+            app:layout_constraintTop_toBottomOf="@+id/siv_profile">
+
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/lpi_upload_progress"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:indeterminate="true"
+                android:progress="0"
+                android:progressTint="?attr/colorPrimary" />
+
+            <ImageView
+                android:id="@+id/iv_cancle_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_close_24" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_desc_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Updating image..."
+            android:textSize="10sp"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@+id/ll_upload_progress"
+            app:layout_constraintTop_toBottomOf="@+id/ll_upload_progress" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:layout_marginStart="@dimen/large_padding_margin"
+            android:layout_marginTop="55dp"
             android:layout_marginEnd="@dimen/large_padding_margin"
             android:hint="@string/hint_username_profile"
             app:layout_constraintEnd_toEndOf="parent"
@@ -165,9 +205,38 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_update"
             app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Small" />
+
+
+        <LinearLayout
+            android:id="@+id/ll_loading"
+            android:layout_width="300dp"
+            android:layout_height="80dp"
+            android:background="@drawable/bg_rounded_10"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="8dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/lpi_loading"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:indeterminate="true"
+                android:progress="0"
+                android:progressTint="?attr/colorPrimary" />
+
+            <TextView
+                android:id="@+id/tv_message_loading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                tools:text="Compress the image" />
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 
 
 </ScrollView>

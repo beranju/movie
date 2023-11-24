@@ -26,6 +26,16 @@
             android:layout_weight="1"
             tools:text="@string/app_title" />
 
+        <ImageView
+            android:id="@+id/iv_favorite"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginEnd="18dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_bookmark_border_24"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full" />
+
+
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/siv_avatar"
             android:layout_width="48dp"

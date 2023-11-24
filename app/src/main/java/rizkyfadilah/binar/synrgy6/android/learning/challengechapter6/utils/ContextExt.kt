@@ -3,6 +3,7 @@ package rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.utils
 import android.app.AlertDialog
 import android.content.ContentValues
 import android.content.Context
+import android.content.DialogInterface
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
@@ -25,13 +26,13 @@ fun Context.showToast(message: String, duration: Int = Toast.LENGTH_SHORT) =
 /**
  * extension function ini digunakan untuk menampilkan alert dialog
  */
-fun Context.showAlert(title: String, message: String, positiveCallback: () -> Unit) {
+fun Context.showAlert(title: String, message: String, positiveCallback: (DialogInterface) -> Unit) {
     val builder = AlertDialog.Builder(this)
     with(builder) {
         setTitle(title)
         setMessage(message)
         setPositiveButton(getString(R.string.ok)) { dialog, _ ->
-            positiveCallback()
+            positiveCallback(dialog)
             dialog.cancel()
         }
         setNegativeButton(getString(R.string.cancel)) { dialog, _ ->

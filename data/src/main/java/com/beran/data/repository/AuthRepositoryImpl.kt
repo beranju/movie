@@ -27,6 +27,10 @@ class AuthRepositoryImpl @Inject constructor(
         sessionManager.saveUser(userData)
     }
 
+    override suspend fun updateUserImage(url: String) {
+        sessionManager.updateUserImage(url)
+    }
+
     override suspend fun uploadPhoto(file: File): String {
         val requestFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
         val body = MultipartBody.Part.createFormData(

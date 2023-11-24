@@ -12,6 +12,7 @@ interface AuthRepository{
     fun getSavedData(): Flow<UserData>
 
     suspend fun saveUser(userData: UserData)
+    suspend fun updateUserImage(url: String)
 
     suspend fun uploadPhoto(file: File): String
 

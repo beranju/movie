@@ -16,6 +16,8 @@ import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.state.Li
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.MovieAdapter
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.state.UserState
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.utils.loadUrl
+import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.utils.showAlert
+import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.utils.showToast
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -54,6 +56,13 @@ class HomeFragment : Fragment() {
                     binding.tvUsername.text = getString(R.string.greeting, username)
                     binding.sivAvatar.loadUrl(state.userData.imageUrl)
                     showLoading(false)
+                    if (username.isBlank()){
+//                        requireContext().showAlert("Set Profile", "Please set your profile", positiveCallback = {
+//                            findNavController().navigate(R.id.action_homeFragment_to_profileFragment)
+//                            it.dismiss()
+//                            it.cancel()
+//                        })
+                    }
                 }
             }
         }
@@ -119,6 +128,11 @@ class HomeFragment : Fragment() {
     ): View {
         _binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getSavedData()
     }
 
     override fun onDestroyView() {

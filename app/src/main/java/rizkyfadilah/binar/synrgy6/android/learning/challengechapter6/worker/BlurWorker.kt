@@ -24,6 +24,12 @@ class BlurWorker @AssistedInject constructor(
     override fun doWork(): Result {
         val context = applicationContext
         val imageUri = inputData.getString(KEY_IMAGE_URI)
+        makeStatusNotification("Blurring image", context)
+        (0..100 step 10).forEach {
+            setProgressAsync(workDataOf("PROGRESS" to it))
+            sleep()
+        }
+
         return try {
             if (TextUtils.isEmpty(imageUri)) {
                 Log.e(TAG, "Invalid input uri")
