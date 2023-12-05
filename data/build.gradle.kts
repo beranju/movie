@@ -30,7 +30,7 @@ android {
             buildConfigField("String", "API_KEY", "\"$movieApiKey\"")
             buildConfigField("String", "IMG_BB_API_KEY", "\"$imgBBApiKey\"")
         }
-        debug{
+        debug {
             buildConfigField("String", "API_KEY", "\"$movieApiKey\"")
             buildConfigField("String", "IMG_BB_API_KEY", "\"$imgBBApiKey\"")
         }
@@ -42,7 +42,7 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    buildFeatures{
+    buildFeatures {
         buildConfig = true
     }
 }
@@ -61,6 +61,11 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
+    implementation(platform("com.squareup.okhttp3:okhttp-bom:4.9.3"))
+
+    debugImplementation("com.github.chuckerteam.chucker:library:4.0.0")
+    releaseImplementation("com.github.chuckerteam.chucker:library-no-op:4.0.0")
+
 
     implementation("androidx.datastore:datastore-preferences:1.0.0")
 

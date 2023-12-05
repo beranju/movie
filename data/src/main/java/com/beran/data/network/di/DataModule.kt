@@ -1,11 +1,16 @@
 package com.beran.data.network.di
 
+import android.content.Context
 import com.beran.common.Constants.BASE_URL
 import com.beran.data.BuildConfig
 import com.beran.data.network.retrofit.MovieApi
+import com.chuckerteam.chucker.api.ChuckerCollector
+import com.chuckerteam.chucker.api.ChuckerInterceptor
+import com.chuckerteam.chucker.api.RetentionManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -41,12 +46,14 @@ object DataModule {
     @Provides
     @Singleton
     fun provideClient(
+        @ApplicationContext context: Context,
         @Named("loggingInterceptor") loggingInterceptor: Interceptor,
-        @Named("headerInterceptor") headerInterceptor: Interceptor
+        @Named("headerInterceptor") headerInterceptor: Interceptor,
     ): OkHttpClient =
         OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
             .addInterceptor(headerInterceptor)
+            .addInterceptor(ChuckerInterceptor(context))
             .connectTimeout(20, TimeUnit.SECONDS)
             .readTimeout(20, TimeUnit.SECONDS)
             .build()
