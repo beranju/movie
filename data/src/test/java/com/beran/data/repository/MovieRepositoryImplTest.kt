@@ -5,29 +5,20 @@ import com.beran.data.mappers.toMovieItems
 import com.beran.data.network.model.MovieDetailResponse
 import com.beran.data.network.model.NowPlayingResponse
 import com.beran.data.network.model.PopularResponse
-import com.beran.data.network.model.ResultsItem
 import com.beran.data.network.retrofit.MovieApi
 import com.beran.data.utils.DataDummy
-import com.beran.domain.model.MovieItem
 import com.beran.domain.repository.MovieRepository
 import junit.framework.TestCase
 import kotlinx.coroutines.runBlocking
-import okhttp3.MediaType
-import okhttp3.ResponseBody
 import org.junit.Assert.*
-
 import org.junit.Before
 import org.junit.Test
-import org.junit.function.ThrowingRunnable
 import org.junit.runner.RunWith
-import org.junit.runners.JUnit4
 import org.mockito.Mock
 import org.mockito.Mockito.verify
 import org.mockito.Mockito.`when`
-import org.mockito.exceptions.base.MockitoException
 import org.mockito.junit.MockitoJUnitRunner
 import retrofit2.Response
-import java.io.IOException
 
 @RunWith(MockitoJUnitRunner::class)
 class MovieRepositoryImplTest {
