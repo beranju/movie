@@ -9,7 +9,7 @@ import com.beran.data.network.retrofit.MovieApi
 import com.beran.data.utils.DataDummy
 import com.beran.domain.repository.MovieRepository
 import junit.framework.TestCase
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
@@ -32,7 +32,7 @@ class MovieRepositoryImplTest {
     }
 
     @Test
-    fun `getNowPlayingMovies should return success`() = runBlocking {
+    fun `getNowPlayingMovies should return success`() = runTest {
         val listMovies = DataDummy.generateMovies()
         val response = Response.success(NowPlayingResponse(
             results = listMovies
@@ -48,7 +48,7 @@ class MovieRepositoryImplTest {
     }
 
     @Test
-    fun `getNowPlayingMovies should return error`() = runBlocking {
+    fun `getNowPlayingMovies should return error`() = runTest {
         `when`(api.getNowPlayingMovies()).thenThrow(RuntimeException("cannot process"))
         try {
             repo.getNowPlayingMovies()
@@ -60,7 +60,7 @@ class MovieRepositoryImplTest {
     }
 
     @Test
-    fun `getPopularMovies should return data`() = runBlocking {
+    fun `getPopularMovies should return data`() = runTest {
         val listMovies = DataDummy.generateMovies()
         val response = Response.success(PopularResponse(
             results = listMovies
@@ -76,7 +76,7 @@ class MovieRepositoryImplTest {
     }
 
     @Test
-    fun `getPopularMovies should return error`() = runBlocking {
+    fun `getPopularMovies should return error`() = runTest {
         `when`(api.getPopularMovies()).thenThrow(RuntimeException("cannot process"))
         try {
             repo.getPopularMovies()
@@ -88,7 +88,7 @@ class MovieRepositoryImplTest {
     }
 
     @Test
-    fun `getMovieDetail should return data`() = runBlocking {
+    fun `getMovieDetail should return data`() = runTest {
         val movie = MovieDetailResponse(id = 1)
         val response = Response.success(movie)
         `when`(api.getDetailMovie(1)).thenReturn(response)
@@ -102,7 +102,7 @@ class MovieRepositoryImplTest {
     }
 
     @Test
-    fun `getMovieDetail should return error`() = runBlocking {
+    fun `getMovieDetail should return error`() = runTest {
         `when`(api.getDetailMovie(1)).thenThrow(RuntimeException("cannot process"))
         try {
             repo.getMovieDetail(1)

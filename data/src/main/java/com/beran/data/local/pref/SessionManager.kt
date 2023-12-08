@@ -52,15 +52,19 @@ class SessionManager(private val dataStore: DataStore<Preferences>) {
         )
     }
 
-    suspend fun saveUser(userData: UserData) = dataStore.edit {
-        it[KEY_NAME] = userData.name
-        it[KEY_USERNAME] = userData.username
-        it[KEY_BIRTHDAY] = userData.birthDay
-        it[KEY_ADDRESS] = userData.address
+    suspend fun saveUser(userData: UserData) {
+        dataStore.edit {
+            it[KEY_NAME] = userData.name
+            it[KEY_USERNAME] = userData.username
+            it[KEY_BIRTHDAY] = userData.birthDay
+            it[KEY_ADDRESS] = userData.address
+        }
     }
 
-    suspend fun updateUserImage(url: String) = dataStore.edit {
-        it[KEY_IMAGE] = url
+    suspend fun updateUserImage(url: String) {
+        dataStore.edit {
+            it[KEY_IMAGE] = url
+        }
     }
 
     suspend fun logout() {
