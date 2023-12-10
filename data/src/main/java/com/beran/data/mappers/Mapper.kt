@@ -24,7 +24,7 @@ fun List<ResultsItem>.toMovieItems(): List<MovieItem> {
     }
 }
 
-fun List<MovieEntity>.toMovieItems(): List<MovieItem> {
+fun List<MovieEntity>.movieEntityToMovieItems(): List<MovieItem> {
     return map {
         MovieItem(
             id = it.id,

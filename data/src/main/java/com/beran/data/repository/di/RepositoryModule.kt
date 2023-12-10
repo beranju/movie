@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import com.beran.data.local.pref.SessionManager
+import com.beran.data.local.room.MovieDao
 import com.beran.data.network.retrofit.ImgBbApi
 import com.beran.data.network.retrofit.MovieApi
 import com.beran.data.repository.AuthRepositoryImpl
@@ -39,7 +40,7 @@ object RepositoryModule {
 
     @Singleton
     @Provides
-    fun provideMovieRepository(api: MovieApi): MovieRepository =
-        MovieRepositoryImpl(api)
+    fun provideMovieRepository(movieDao: MovieDao, api: MovieApi): MovieRepository =
+        MovieRepositoryImpl(movieDao, api)
 
 }

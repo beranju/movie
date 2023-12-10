@@ -1,6 +1,7 @@
 package com.beran.data.repository
 
 import com.beran.data.local.room.MovieDao
+import com.beran.data.mappers.movieEntityToMovieItems
 import com.beran.data.mappers.toMovieDetail
 import com.beran.data.mappers.toMovieEntity
 import com.beran.data.mappers.toMovieItems
@@ -32,7 +33,7 @@ class MovieRepositoryImpl @Inject constructor(
 
     override fun getFavoriteMovies(): List<MovieItem> =
         try {
-            movieDao.getAll().toMovieItems()
+            movieDao.getAll().movieEntityToMovieItems()
         } catch (e: Exception) {
             throw e
         }

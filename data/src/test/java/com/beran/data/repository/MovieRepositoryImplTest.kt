@@ -1,5 +1,6 @@
 package com.beran.data.repository
 
+import com.beran.data.local.room.MovieDao
 import com.beran.data.mappers.toMovieDetail
 import com.beran.data.mappers.toMovieItems
 import com.beran.data.network.model.MovieDetailResponse
@@ -23,20 +24,25 @@ import retrofit2.Response
 @RunWith(MockitoJUnitRunner::class)
 class MovieRepositoryImplTest {
     @Mock
+    private lateinit var movieDao: MovieDao
+
+    @Mock
     private lateinit var api: MovieApi
     private lateinit var repo: MovieRepository
 
     @Before
     fun setUp() {
-        repo = MovieRepositoryImpl(api)
+        repo = MovieRepositoryImpl(movieDao, api)
     }
 
     @Test
     fun `getNowPlayingMovies should return success`() = runTest {
         val listMovies = DataDummy.generateMovies()
-        val response = Response.success(NowPlayingResponse(
-            results = listMovies
-        ))
+        val response = Response.success(
+            NowPlayingResponse(
+                results = listMovies
+            )
+        )
         `when`(api.getNowPlayingMovies()).thenReturn(response)
 
         val expected = listMovies.toMovieItems()
@@ -53,7 +59,7 @@ class MovieRepositoryImplTest {
         try {
             repo.getNowPlayingMovies()
             TestCase.fail()
-        }catch (e: Exception){
+        } catch (e: Exception) {
             assertTrue(e is RuntimeException)
             assertEquals(e.message, "cannot process")
         }
@@ -62,9 +68,11 @@ class MovieRepositoryImplTest {
     @Test
     fun `getPopularMovies should return data`() = runTest {
         val listMovies = DataDummy.generateMovies()
-        val response = Response.success(PopularResponse(
-            results = listMovies
-        ))
+        val response = Response.success(
+            PopularResponse(
+                results = listMovies
+            )
+        )
         `when`(api.getPopularMovies()).thenReturn(response)
 
         val expected = listMovies.toMovieItems()
@@ -81,7 +89,7 @@ class MovieRepositoryImplTest {
         try {
             repo.getPopularMovies()
             TestCase.fail()
-        }catch (e: Exception){
+        } catch (e: Exception) {
             assertTrue(e is RuntimeException)
             assertEquals(e.message, "cannot process")
         }
@@ -107,7 +115,7 @@ class MovieRepositoryImplTest {
         try {
             repo.getMovieDetail(1)
             TestCase.fail()
-        }catch (e: Exception){
+        } catch (e: Exception) {
             assertTrue(e is RuntimeException)
             assertEquals(e.message, "cannot process")
         }

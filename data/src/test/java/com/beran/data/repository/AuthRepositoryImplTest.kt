@@ -1,20 +1,16 @@
 package com.beran.data.repository
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.beran.data.local.pref.SessionManager
-import com.beran.data.network.model.Data
-import com.beran.data.network.model.ImgBbResponse
 import com.beran.data.network.retrofit.ImgBbApi
 import com.beran.domain.model.UserData
 import com.beran.domain.repository.AuthRepository
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.asRequestBody
 import org.junit.Assert.*
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
@@ -23,11 +19,14 @@ import org.mockito.Mockito.verify
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
-import retrofit2.Response
 import java.io.File
 
 @RunWith(MockitoJUnitRunner::class)
 class AuthRepositoryImplTest {
+
+    @get:Rule
+    val instantExecutorRule = InstantTaskExecutorRule()
+
     @Mock
     private lateinit var sessionManager: SessionManager
 
