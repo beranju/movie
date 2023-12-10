@@ -28,7 +28,23 @@ android {
                 "proguard-rules.pro"
             )
         }
+        debug {
+            applicationIdSuffix = ".debug"
+            isDebuggable = true
+        }
     }
+
+    // flavor dimension
+    flavorDimensions += "version"
+    productFlavors{
+        create("free"){
+            applicationIdSuffix = ".free"
+        }
+        create("pro"){
+            applicationIdSuffix = ".pro"
+        }
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
