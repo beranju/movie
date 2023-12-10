@@ -16,6 +16,9 @@ interface MovieDao {
     @Query("SELECT * FROM movie WHERE id = :id")
     fun getById(id: Int): MovieEntity
 
+    @Query("SELECT EXISTS(SELECT * FROM movie WHERE id = :id)")
+    fun isFavoriteMovie(id: Int): Boolean
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(movieEntity: MovieEntity)
 

@@ -45,6 +45,13 @@ class MovieRepositoryImpl @Inject constructor(
             throw e
         }
 
+    override fun isFavoriteMovie(id: Int): Boolean =
+        try {
+            movieDao.isFavoriteMovie(id)
+        } catch (e: Exception) {
+            throw e
+        }
+
     override suspend fun addFavoriteMovie(movieDetail: MovieDetail) {
         val movie = movieDetail.toMovieEntity()
         try {

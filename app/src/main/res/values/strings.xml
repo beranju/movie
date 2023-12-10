@@ -52,4 +52,6 @@
     <string name="are_you_sure_to_cancel_updating_photo">Are you sure to cancel updating photo?</string>
     <string name="cancel_upload">Cancel upload</string>
     <string name="updating_image">Updating image...</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

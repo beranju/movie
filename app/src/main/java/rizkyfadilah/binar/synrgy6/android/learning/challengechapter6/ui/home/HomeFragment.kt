@@ -112,6 +112,9 @@ class HomeFragment : Fragment() {
         binding.sivAvatar.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_profileFragment)
         }
+        binding.ivFavorite.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_favoriteFragment)
+        }
 
     }
 
