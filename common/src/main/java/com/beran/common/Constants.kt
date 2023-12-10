@@ -11,6 +11,9 @@ object Constants {
     const val NOW_MOVIE_TYPE = 0
     const val POP_MOVIE_TYPE = 1
 
+    // DATABASE CONSTANT
+    const val DB_NAME = "movie_database"
+
     // PREFS CONSTANTS
     const val PREF_NAME = "movie_user"
     const val LOGIN_KEY = "is_login"
