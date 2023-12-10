@@ -5,15 +5,13 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.Update
 import com.beran.data.local.model.MovieEntity
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface MovieDao {
 
     @Query("SELECT * FROM movie")
-    fun getAll(): Flow<List<MovieEntity>>
+    fun getAll(): List<MovieEntity>
 
     @Query("SELECT * FROM movie WHERE id = :id")
     fun getById(id: Int): MovieEntity

@@ -1,5 +1,6 @@
 package com.beran.data.mappers
 
+import com.beran.data.local.model.MovieEntity
 import com.beran.data.network.model.MovieDetailResponse
 import com.beran.data.network.model.ResultsItem
 import com.beran.domain.model.MovieDetail
@@ -23,9 +24,26 @@ fun List<ResultsItem>.toMovieItems(): List<MovieItem> {
     }
 }
 
+fun List<MovieEntity>.toMovieItems(): List<MovieItem> {
+    return map {
+        MovieItem(
+            id = it.id,
+            voteCount = it.voteCount,
+            overview = it.overview,
+            originalTitle = it.title,
+            title = it.title,
+            genreIds = listOf(0),
+            posterPath = it.posterPath,
+            backdropPath = it.backdropPath,
+            releaseDate = it.releaseDate,
+            popularity = it.popularity,
+            voteAverage = it.voteAverage
+        )
+    }
+}
+
 fun MovieDetailResponse.toMovieDetail(): MovieDetail {
     return MovieDetail(
-        originalLanguage = originalLanguage.orEmpty(),
         title = title.orEmpty(),
         backdropPath = backdropPath.orEmpty(),
         revenue = revenue ?: 0,
@@ -42,5 +60,46 @@ fun MovieDetailResponse.toMovieDetail(): MovieDetail {
         tagline = tagline.orEmpty(),
         homepage = homepage.orEmpty(),
         status = status.orEmpty()
+    )
+}
+
+fun MovieDetail.toMovieEntity(): MovieEntity {
+    return MovieEntity(
+        id,
+        overview,
+        title,
+        posterPath,
+        backdropPath,
+        releaseDate,
+        popularity,
+        voteAverage,
+        voteCount,
+        revenue,
+        genres,
+        budget,
+        tagline,
+        homepage,
+        status
+    )
+}
+
+fun MovieEntity.toMovieDetail(): MovieDetail {
+    return MovieDetail(
+        title = title,
+        backdropPath = backdropPath,
+        revenue = revenue,
+        genres = genres,
+        popularity = popularity,
+        id = id,
+        voteCount = voteCount,
+        budget = budget,
+        overview = overview,
+        originalTitle = title,
+        posterPath = posterPath,
+        releaseDate = releaseDate,
+        voteAverage = voteAverage,
+        tagline = tagline,
+        homepage = homepage,
+        status = status
     )
 }

@@ -1,7 +1,6 @@
 package com.beran.domain.model
 
 data class MovieDetail(
-    val originalLanguage: String ,
     val title: String ,
     val backdropPath: String ,
     val revenue: Int ,
