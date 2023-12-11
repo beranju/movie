@@ -9,6 +9,7 @@ import com.beran.domain.model.MovieDetail
 import com.beran.domain.usecase.movie.AddFavoriteMovieUseCase
 import com.beran.domain.usecase.movie.DeleteFavoriteMovieUseCase
 import com.beran.domain.usecase.movie.DetailMovieUseCase
+import com.beran.domain.usecase.movie.GetFavoriteMovieByIdUseCase
 import com.beran.domain.usecase.movie.IsFavoriteMovieUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.cancel
@@ -24,9 +25,9 @@ class DetailViewModel @Inject constructor(
     private val detailMovieUseCase: DetailMovieUseCase,
     private val isFavoriteMovieUseCase: IsFavoriteMovieUseCase,
     private val addFavoriteMovieUseCase: AddFavoriteMovieUseCase,
-    private val deleteFavoriteMovieUseCase: DeleteFavoriteMovieUseCase
-) :
-    ViewModel() {
+    private val deleteFavoriteMovieUseCase: DeleteFavoriteMovieUseCase,
+    private val getFavoriteMovieById: GetFavoriteMovieByIdUseCase
+) : ViewModel() {
 
     private var _detailState = MutableLiveData<MovieState>()
     val detailState: LiveData<MovieState> get() = _detailState
@@ -36,6 +37,19 @@ class DetailViewModel @Inject constructor(
 
     fun getDetailMovie(id: Int) {
         detailMovieUseCase.invoke(id).onEach { result ->
+            when (result) {
+                is Resource.Loading -> _detailState.value = MovieState.Loading
+                is Resource.Error -> _detailState.value =
+                    MovieState.Error(result.error)
+
+                is Resource.Success -> _detailState.value =
+                    MovieState.Success(result.data)
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    fun getDetailFavoriteMovie(id: Int) {
+        getFavoriteMovieById.invoke(id).onEach { result ->
             when (result) {
                 is Resource.Loading -> _detailState.value = MovieState.Loading
                 is Resource.Error -> _detailState.value =

@@ -44,14 +44,15 @@
     <string name="image_source_title">Image source</string>
     <string name="image_source_description">Select the image source</string>
     <string name="update_photo_successfully">Update photo successfully</string>
-    <string name="saving_data">Saving data...</string>
+    <string name="saving_data">Saving data…</string>
     <string name="save_data_failed_try_again">Save data failed, try again!</string>
     <string name="clean_worker_notify_message">Cleaning up old temporary files</string>
     <string name="blur_worker_notify_blurring_image">Blurring image</string>
     <string name="upload_worker_notify_message">Uploading photo profile</string>
     <string name="are_you_sure_to_cancel_updating_photo">Are you sure to cancel updating photo?</string>
     <string name="cancel_upload">Cancel upload</string>
-    <string name="updating_image">Updating image...</string>
+    <string name="updating_image">Updating image…</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="favorite_movies_title">Favorite Movies</string>
+    <string name="wait_loading_the_data">Wait, loading the data</string>
 </resources>

@@ -29,6 +29,9 @@ import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.utils.showC
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.utils.showToast
 import java.util.Calendar
 
+// TODO
+// FIX button visiblitity when update profile
+
 @AndroidEntryPoint
 class ProfileFragment : Fragment() {
     private var _binding: FragmentProfileBinding? = null

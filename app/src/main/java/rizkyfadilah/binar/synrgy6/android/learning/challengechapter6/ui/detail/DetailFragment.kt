@@ -27,20 +27,26 @@ class DetailFragment : Fragment() {
     private val args: DetailFragmentArgs by navArgs()
     private val viewModel by viewModels<DetailViewModel>()
     private var isFavorite: Boolean = false
-    private lateinit var movieDetail: MovieDetail
+    private var movieDetail: MovieDetail? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // TODO
-        // fetch data from local
+        val isFavoriteItem : Boolean = args.isFavoriteItem
         val id: Int = args.id
-        viewModel.getDetailMovie(id)
-        viewModel.checkMovie(id)
+        if (isFavoriteItem){
+            isFavorite = true
+            setFavoriteIconState()
+            viewModel.getDetailFavoriteMovie(id)
+        }else{
+            viewModel.getDetailMovie(id)
+            viewModel.checkMovie(id)
 
+        }
 
         viewModel.detailState.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is MovieState.Loading -> {
+
                 }
 
                 is MovieState.Error -> {
@@ -74,20 +80,30 @@ class DetailFragment : Fragment() {
 
         viewModel.isFavorite.observe(viewLifecycleOwner) { state ->
             isFavorite = state
-            binding.ibFavorite.setImageResource(if (isFavorite) R.drawable.ic_bookmark_24 else R.drawable.ic_bookmark_border_24)
+            setFavoriteIconState()
         }
 
         binding.ibFavorite.setOnClickListener {
-            if (isFavorite) {
-                viewModel.deleteFavoriteMovie(movieDetail)
-            } else {
-                viewModel.addFavoriteMovie(movieDetail)
+            if (movieDetail != null){
+                if (isFavorite) {
+                    viewModel.deleteFavoriteMovie(movieDetail!!)
+                    viewModel.checkMovie(id)
+                } else {
+                    viewModel.addFavoriteMovie(movieDetail!!)
+                    viewModel.checkMovie(id)
+                }
+            }else{
+                Toast.makeText(requireContext(),
+                    getString(R.string.wait_loading_the_data), Toast.LENGTH_SHORT).show()
             }
-            viewModel.checkMovie(id)
         }
         binding.ivNavigateBack.setOnClickListener {
             findNavController().navigateUp()
         }
+    }
+
+    private fun setFavoriteIconState() {
+        binding.ibFavorite.setImageResource(if (isFavorite) R.drawable.ic_bookmark_24 else R.drawable.ic_bookmark_border_24)
     }
 
     override fun onCreateView(

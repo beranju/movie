@@ -27,7 +27,11 @@
             app:popExitAnim="@anim/slide_out" />
         <action
             android:id="@+id/action_homeFragment_to_favoriteFragment"
-            app:destination="@id/favoriteFragment" />
+            app:destination="@id/favoriteFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out" />
     </fragment>
     <fragment
         android:id="@+id/detailFragment"
@@ -37,6 +41,10 @@
         <argument
             android:name="id"
             app:argType="integer" />
+        <argument
+            android:name="isFavoriteItem"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"

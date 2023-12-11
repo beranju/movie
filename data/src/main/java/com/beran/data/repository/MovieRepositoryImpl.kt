@@ -10,6 +10,7 @@ import com.beran.data.network.utils.SafeApiRequest
 import com.beran.domain.model.MovieDetail
 import com.beran.domain.model.MovieItem
 import com.beran.domain.repository.MovieRepository
+import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(
@@ -31,9 +32,9 @@ class MovieRepositoryImpl @Inject constructor(
         return response.toMovieDetail()
     }
 
-    override fun getFavoriteMovies(): List<MovieItem> =
+    override suspend fun getFavoriteMovies(): List<MovieItem> =
         try {
-            movieDao.getAll().movieEntityToMovieItems()
+            movieDao.getAll().first().movieEntityToMovieItems()
         } catch (e: Exception) {
             throw e
         }

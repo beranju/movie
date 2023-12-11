@@ -24,7 +24,7 @@ class FavoriteViewModel @Inject constructor(private val getFavoriteMovies: GetAl
         getAllMovies()
     }
 
-    private fun getAllMovies() {
+    fun getAllMovies() {
         getFavoriteMovies.invoke().onEach { result ->
             when (result) {
                 is Resource.Loading -> _favoriteMovies.value = ListMovieState.Loading

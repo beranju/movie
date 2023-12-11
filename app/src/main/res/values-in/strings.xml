@@ -46,12 +46,14 @@
     <string name="image_source_title">Sumber gambar</string>
     <string name="image_source_description">Pilih sumber gambar</string>
     <string name="update_photo_successfully">Photo berhasil di update</string>
-    <string name="saving_data">Menyimpan...</string>
+    <string name="saving_data">Menyimpan…</string>
     <string name="save_data_failed_try_again">Simpan data gagal, coba lagi!</string>
     <string name="clean_worker_notify_message">Menghapus file sementara</string>
     <string name="blur_worker_notify_blurring_image">Memblurkan gambar</string>
     <string name="upload_worker_notify_message">Mengunggah photo profil</string>
     <string name="are_you_sure_to_cancel_updating_photo">Kamu yakin ingin membatalkan perubahan?</string>
     <string name="cancel_upload">Batal upload</string>
-    <string name="updating_image">Memperbaharui gambar...</string>
+    <string name="updating_image">Memperbaharui gambar…</string>
+    <string name="favorite_movies_title">Favorit Movie</string>
+    <string name="wait_loading_the_data">Tunggu, sedang memuat data</string>
 </resources>

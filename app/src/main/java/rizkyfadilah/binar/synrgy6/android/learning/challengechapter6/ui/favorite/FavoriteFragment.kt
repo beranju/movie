@@ -34,7 +34,15 @@ class FavoriteFragment : Fragment() {
         viewModel.favoriteMovies.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is ListMovieState.Loading -> {}
-                is ListMovieState.Error -> {}
+                is ListMovieState.Error -> {
+                    if (result.error != null){
+                        binding.rvFavorite.visibility = View.GONE
+                        binding.llError.visibility = View.VISIBLE
+                    }else{
+                        binding.rvFavorite.visibility = View.VISIBLE
+                        binding.llError.visibility = View.GONE
+                    }
+                }
 
                 is ListMovieState.Success -> {
                     movieAdapter.submitList(result.movies)
@@ -43,8 +51,14 @@ class FavoriteFragment : Fragment() {
         }
         movieAdapter.onclick = { item ->
             val action = FavoriteFragmentDirections.actionFavoriteFragmentToDetailFragment(item.id)
+            action.isFavoriteItem = true
             findNavController().navigate(action)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getAllMovies()
     }
 
     override fun onCreateView(

@@ -6,12 +6,13 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.beran.data.local.model.MovieEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface MovieDao {
 
     @Query("SELECT * FROM movie")
-    fun getAll(): List<MovieEntity>
+    fun getAll(): Flow<List<MovieEntity>>
 
     @Query("SELECT * FROM movie WHERE id = :id")
     fun getById(id: Int): MovieEntity
