@@ -18,7 +18,8 @@
             android:background="?attr/colorOnSurfaceVariant"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/thumbnail_of_movie" />
 
         <TextView
             android:id="@+id/tv_title"

@@ -35,15 +35,12 @@
     <string name="login_failed_try_again">Login failed, try again</string>
     <string name="register_failed_try_again">Register failed, try again!</string>
     <string name="logout_failed_try_again">Logout failed, try again!</string>
-    <string name="update_profile_successfully">Update profile successfully</string>
     <string name="gallery">Gallery</string>
     <string name="camera">Camera</string>
-    <string name="select_image_source">Select image source</string>
     <string name="cancel">Cancel</string>
     <string name="ok">OK</string>
     <string name="image_source_title">Image source</string>
     <string name="image_source_description">Select the image source</string>
-    <string name="update_photo_successfully">Update photo successfully</string>
     <string name="saving_data">Saving data…</string>
     <string name="save_data_failed_try_again">Save data failed, try again!</string>
     <string name="clean_worker_notify_message">Cleaning up old temporary files</string>
@@ -55,4 +52,9 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="favorite_movies_title">Favorite Movies</string>
     <string name="wait_loading_the_data">Wait, loading the data</string>
+    <string name="add_movies_to_favorite">Add movies to favorite</string>
+    <string name="error_illustration">Error Illustration</string>
+    <string name="icon_to_navigate_to_favorite_screen">Icon to navigate to favorite screen</string>
+    <string name="cancle_the_update_progress">Cancle the update progress</string>
+    <string name="thumbnail_of_movie">Thumbnail of movie</string>
 </resources>

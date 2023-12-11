@@ -78,6 +78,10 @@ class ProfileFragment : Fragment() {
                     binding.llUploadProgress.visibility = View.GONE
                     binding.tvDescProgress.visibility = View.GONE
                     binding.sivAddPhoto.isEnabled = true
+                } else if (WorkInfo.State.CANCELLED == workInfo.state) {
+                    binding.llUploadProgress.visibility = View.GONE
+                    binding.tvDescProgress.visibility = View.GONE
+                    binding.sivAddPhoto.isEnabled = true
                 }
             }
         }
@@ -88,10 +92,8 @@ class ProfileFragment : Fragment() {
                     val progress = workInfo.progress.getInt(PROGRESS, 0)
                     binding.lpiUploadProgress.progress = progress
                     binding.sivAddPhoto.isEnabled = false
-                    binding.llUploadProgress.visibility =
-                        if (WorkInfo.State.RUNNING == workInfo.state) View.VISIBLE else View.GONE
-                    binding.tvDescProgress.visibility =
-                        if (WorkInfo.State.RUNNING == workInfo.state) View.VISIBLE else View.GONE
+                    binding.llUploadProgress.visibility = View.VISIBLE
+                    binding.tvDescProgress.visibility = View.VISIBLE
                     binding.ivCancleProgress.setOnClickListener {
                         requireContext().showAlert(
                             getString(R.string.cancel_upload),

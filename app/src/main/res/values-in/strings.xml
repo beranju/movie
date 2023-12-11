@@ -6,7 +6,7 @@
     <string name="popular">Populer</string>
     <string name="app_title">Movies</string>
     <string name="error_message">Terjadi kesalahan, coba lagi</string>
-    <string name="load_content">Memuat kontent</string>
+    <string name="load_content">Memuat Konten</string>
     <string name="hint_email">Masukkan email</string>
     <string name="hint_password">Masukkan password</string>
     <string name="login">Masuk</string>
@@ -37,15 +37,12 @@
     <string name="login_failed_try_again">Masuk gagal, coba lagi!</string>
     <string name="register_failed_try_again">Daftar gagal, coba lagi!</string>
     <string name="logout_failed_try_again">Keluar gagal, coba lagi!</string>
-    <string name="update_profile_successfully">Profil berhasil di update</string>
     <string name="gallery">Galeri</string>
     <string name="camera">Kamera</string>
-    <string name="select_image_source">Pilih sumber gambar</string>
     <string name="cancel">Batal</string>
     <string name="ok">Oke</string>
     <string name="image_source_title">Sumber gambar</string>
     <string name="image_source_description">Pilih sumber gambar</string>
-    <string name="update_photo_successfully">Photo berhasil di update</string>
     <string name="saving_data">Menyimpan…</string>
     <string name="save_data_failed_try_again">Simpan data gagal, coba lagi!</string>
     <string name="clean_worker_notify_message">Menghapus file sementara</string>
@@ -56,4 +53,9 @@
     <string name="updating_image">Memperbaharui gambar…</string>
     <string name="favorite_movies_title">Favorit Movie</string>
     <string name="wait_loading_the_data">Tunggu, sedang memuat data</string>
+    <string name="add_movies_to_favorite">Tambahkan movie ke favorit</string>
+    <string name="error_illustration">Ilustrasi Error</string>
+    <string name="icon_to_navigate_to_favorite_screen">Ikon navigasi ke halam favorit</string>
+    <string name="cancle_the_update_progress">Batal update</string>
+    <string name="thumbnail_of_movie">Thumbnail movie</string>
 </resources>

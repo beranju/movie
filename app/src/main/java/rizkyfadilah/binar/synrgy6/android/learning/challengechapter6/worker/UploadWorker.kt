@@ -9,7 +9,6 @@ import androidx.work.CoroutineWorker
 import androidx.work.ListenableWorker.Result.failure
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
-import com.beran.common.Constants
 import com.beran.common.Constants.KEY_IMAGE_URI
 import com.beran.common.Constants.PROGRESS
 import com.beran.common.Resource
@@ -17,7 +16,6 @@ import com.beran.domain.usecase.auth.UploadPhotoUseCase
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.withContext
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.R
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.utils.uriToTempFile
@@ -32,11 +30,14 @@ class UploadWorker @AssistedInject constructor(
 ) : CoroutineWorker(context, params) {
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         val context = applicationContext
-        val imageUri = inputData.getString(Constants.KEY_IMAGE_URI)
-        var loading: Boolean = false
+        val imageUri = inputData.getString(KEY_IMAGE_URI)
+        var loading = false
         var error: String? = null
-        var imgUrl: String = ""
-        makeStatusNotification(context.getString(R.string.upload_worker_notify_message), applicationContext)
+        var imgUrl = ""
+        makeStatusNotification(
+            context.getString(R.string.upload_worker_notify_message),
+            applicationContext
+        )
         sleep()
         try {
             if (TextUtils.isEmpty(imageUri.toString())) {
@@ -79,7 +80,7 @@ class UploadWorker @AssistedInject constructor(
         } catch (throwable: Throwable) {
             Log.e(TAG, "Error uploading photo")
             throwable.printStackTrace()
-            Result.failure()
+            failure()
         }
     }
 }

@@ -22,7 +22,7 @@ abstract class SafeApiRequest {
                         message.append("Error parsing response body")
                     }
                 }
-                Log.e("TAG", "safeApiRequest: ${message.toString()}")
+                Log.e("TAG", "safeApiRequest: $message")
                 throw ApiException(message.toString())
             }
         }catch (_: IOException){
