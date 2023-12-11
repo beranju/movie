@@ -39,9 +39,13 @@ android {
     productFlavors{
         create("free"){
             applicationIdSuffix = ".free"
+            manifestPlaceholders["appIcon"] = "@mipmap/ic_launcher_free"
+            manifestPlaceholders["appIconRound"] = "@mipmap/ic_launcher_free"
         }
         create("pro"){
             applicationIdSuffix = ".pro"
+            manifestPlaceholders["appIcon"] = "@mipmap/ic_launcher"
+            manifestPlaceholders["appIconRound"] = "@mipmap/ic_launcher"
         }
     }
 
