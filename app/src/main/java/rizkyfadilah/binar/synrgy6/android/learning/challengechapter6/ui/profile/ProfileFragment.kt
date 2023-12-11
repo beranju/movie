@@ -80,6 +80,7 @@ class ProfileFragment : Fragment() {
                 if (WorkInfo.State.SUCCEEDED == workInfo.state) {
                     binding.llUploadProgress.visibility = View.GONE
                     binding.tvDescProgress.visibility = View.GONE
+                    binding.sivAddPhoto.isEnabled = true
                 }
             }
         }
@@ -89,6 +90,7 @@ class ProfileFragment : Fragment() {
                 if (WorkInfo.State.RUNNING == workInfo.state) {
                     val progress = workInfo.progress.getInt(PROGRESS, 0)
                     binding.lpiUploadProgress.progress = progress
+                    binding.sivAddPhoto.isEnabled = false
                     binding.llUploadProgress.visibility =
                         if (WorkInfo.State.RUNNING == workInfo.state) View.VISIBLE else View.GONE
                     binding.tvDescProgress.visibility =
