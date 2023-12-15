@@ -39,7 +39,6 @@ object DataDummy {
             voteCount = 1,
             budget = 1,
             overview = "",
-            originalLanguage = "",
             posterPath = "",
             releaseDate = "",
             voteAverage = 0.0,
