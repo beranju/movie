@@ -50,8 +50,7 @@ class FavoriteFragment : Fragment() {
             }
         }
         movieAdapter.onclick = { item ->
-            val action = FavoriteFragmentDirections.actionFavoriteFragmentToDetailFragment(item.id)
-            action.isFavoriteItem = true
+            val action = FavoriteFragmentDirections.actionFavoriteFragmentToDetailFragment(id = item.id, isFavoriteItem = true)
             findNavController().navigate(action)
         }
     }

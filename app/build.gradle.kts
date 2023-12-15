@@ -3,7 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
-    id("androidx.navigation.safeargs")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -36,13 +36,13 @@ android {
 
     // flavor dimension
     flavorDimensions += "version"
-    productFlavors{
-        create("free"){
+    productFlavors {
+        create("free") {
             applicationIdSuffix = ".free"
             manifestPlaceholders["appIcon"] = "@mipmap/ic_launcher_free"
             manifestPlaceholders["appIconRound"] = "@mipmap/ic_launcher_free"
         }
-        create("pro"){
+        create("pro") {
             applicationIdSuffix = ".pro"
             manifestPlaceholders["appIcon"] = "@mipmap/ic_launcher"
             manifestPlaceholders["appIconRound"] = "@mipmap/ic_launcher"
