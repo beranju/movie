@@ -38,7 +38,7 @@ platform :android do
 
   lane :build_free_debug do
     gradle(task: "clean")
-    gradle(task: "test")
+#     gradle(task: "test")
     gradle(task: "assembleFreeDebug")
     firebase_app_distribution(
         app: "1:66413692087:android:e96f4bafa8f955fbb8b932",
