@@ -58,4 +58,14 @@
     <string name="icon_to_navigate_to_favorite_screen">Ikon navigasi ke halam favorit</string>
     <string name="cancle_the_update_progress">Batal update</string>
     <string name="thumbnail_of_movie">Thumbnail movie</string>
+    <string name="update_name_title">Perbaharui Nama</string>
+    <string name="name_label">Nama</string>
+    <string name="update_address_title">Perbaharui Alamat</string>
+    <string name="address_label">Alamat</string>
+    <string name="update_username_title">Perbaharui Username</string>
+    <string name="username_label">Username</string>
+    <string name="birthday_label">Tanggal Lahir</string>
+    <string name="icon_edit">Ikon perbaharui</string>
+    <string name="icon_back">Ikon kembali</string>
+    <string name="finish">Selesai</string>
 </resources>

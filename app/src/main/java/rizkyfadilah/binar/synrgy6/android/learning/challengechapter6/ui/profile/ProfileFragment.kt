@@ -22,6 +22,7 @@ import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.R
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.databinding.FragmentProfileBinding
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.state.AuthState
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.state.UserState
+import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.utils.customAlertDialog
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.utils.getImgUri
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.utils.loadUrl
 import rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.utils.showAlert
@@ -47,7 +48,9 @@ class ProfileFragment : Fragment() {
     ) { uri ->
         if (uri != null) {
             imageUri = uri
-            showImage()
+            val action =
+                ProfileFragmentDirections.actionProfileFragmentToCropPhotoFragment(imageUri.toString())
+            findNavController().navigate(action)
         }
     }
 
@@ -55,17 +58,10 @@ class ProfileFragment : Fragment() {
         ActivityResultContracts.TakePicture()
     ) { isSuccess ->
         if (isSuccess) {
-            showImage()
+            val action =
+                ProfileFragmentDirections.actionProfileFragmentToCropPhotoFragment(imageUri.toString())
+            findNavController().navigate(action)
         }
-    }
-
-    private fun showImage() {
-        if (imageUri != null) {
-            binding.sivProfile.setImageURI(imageUri)
-        } else if (photoProfile.isNotEmpty()) {
-            binding.sivProfile.loadUrl(photoProfile)
-        } else
-            binding.sivProfile.setImageResource(R.drawable.ic_avatar)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -78,6 +74,7 @@ class ProfileFragment : Fragment() {
                     binding.llUploadProgress.visibility = View.GONE
                     binding.tvDescProgress.visibility = View.GONE
                     binding.sivAddPhoto.isEnabled = true
+                    viewModel.getSavedData()
                 } else if (WorkInfo.State.CANCELLED == workInfo.state) {
                     binding.llUploadProgress.visibility = View.GONE
                     binding.tvDescProgress.visibility = View.GONE
@@ -113,7 +110,6 @@ class ProfileFragment : Fragment() {
             when (state) {
                 is UserState.Loading -> {}
                 is UserState.Error -> {
-                    binding.btnUpdate.isEnabled = true
                     Toast.makeText(
                         requireContext(),
                         getString(R.string.error_message),
@@ -122,16 +118,15 @@ class ProfileFragment : Fragment() {
                 }
 
                 is UserState.Success -> {
-                    binding.btnUpdate.isEnabled = true
                     val user = state.userData
                     username = user.username
-                    binding.tieUsername.setText(user.username)
+                    binding.tvUsername.text = user.username
                     name = user.name
-                    binding.tieName.setText(user.name)
+                    binding.tvName.text = user.name
                     birthday = user.birthDay
-                    binding.tieBirthday.setText(user.birthDay)
+                    binding.tvBirthday.text = user.birthDay
                     address = user.address
-                    binding.tieAddress.setText(user.address)
+                    binding.tvAddress.text = user.address
                     photoProfile = user.imageUrl
                     if (user.imageUrl.isNotEmpty()) {
                         binding.sivProfile.loadUrl(user.imageUrl)
@@ -179,7 +174,7 @@ class ProfileFragment : Fragment() {
             }
         }
 
-        binding.tieBirthday.setOnClickListener {
+        binding.ivPickDate.setOnClickListener {
             val year = calendar.get(Calendar.YEAR)
             val month = calendar.get(Calendar.MONTH)
             val day = calendar.get(Calendar.DAY_OF_MONTH)
@@ -188,13 +183,75 @@ class ProfileFragment : Fragment() {
                 requireContext(),
                 { _, selectedYear, selectedMonth, selectedDay ->
                     val selectedDate = "$selectedDay-${selectedMonth + 1}-$selectedYear"
-                    binding.tieBirthday.setText(selectedDate)
+                    binding.tvBirthday.text = selectedDate
+                    val userData =
+                        UserData(name, username, selectedDate, address, imageUrl = photoProfile)
+                    viewModel.saveData(userData)
+
                 },
                 year,
                 month,
                 day
             )
             datePicker.show()
+        }
+
+        binding.ivEditName.setOnClickListener {
+            requireContext().customAlertDialog(
+                title = getString(R.string.update_name_title),
+                label = getString(R.string.name_label),
+                initialValue = name,
+                onSaveClick = { newValue ->
+                    if (name != newValue) {
+                        val userData = UserData(
+                            name = newValue,
+                            username,
+                            birthday,
+                            address,
+                            imageUrl = photoProfile
+                        )
+                        viewModel.saveData(userData)
+                    }
+                }
+            )
+        }
+        binding.ivEditUsername.setOnClickListener {
+            requireContext().customAlertDialog(
+                title = getString(R.string.update_username_title),
+                label = getString(R.string.username_label),
+                initialValue = username,
+                onSaveClick = { newValue ->
+                    if (username != newValue) {
+                        val userData = UserData(
+                            name,
+                            newValue,
+                            birthday,
+                            address,
+                            imageUrl = photoProfile
+                        )
+                        viewModel.saveData(userData)
+                    }
+                }
+            )
+        }
+        binding.ivEditAddress.setOnClickListener {
+            requireContext().customAlertDialog(
+                title = getString(R.string.update_address_title),
+                label = getString(R.string.address_label),
+                initialValue = address,
+                onSaveClick = { newValue ->
+                    if (address != newValue) {
+                        val userData = UserData(
+                            name,
+                            username,
+                            birthday,
+                            newValue,
+                            imageUrl = photoProfile
+                        )
+                        viewModel.saveData(userData)
+                    }
+                }
+            )
         }
 
         binding.btnLogout.setOnClickListener {
@@ -208,37 +265,10 @@ class ProfileFragment : Fragment() {
                 })
         }
 
-        binding.btnUpdate.setOnClickListener {
-            val newUsername = binding.tieUsername.text.toString().trim()
-            val newName = binding.tieName.text.toString().trim()
-            val newBirthday = binding.tieBirthday.text.toString().trim()
-            val newAddress = binding.tieAddress.text.toString().trim()
-
-            if (username != newUsername || name != newName || birthday != newBirthday || address != newAddress || imageUri != null) {
-                if (imageUri != null) {
-                    imageUri?.let {
-                        viewModel.blurImage(imageUri!!)
-                    }
-                }
-                val user = UserData(
-                    name = newName,
-                    username = newUsername,
-                    birthDay = newBirthday,
-                    address = newAddress,
-                    imageUrl = imageUri.toString()
-                )
-                viewModel.saveData(user)
-            } else {
-                requireContext().showToast(getString(R.string.no_update))
-            }
-            binding.tieUsername.clearFocus()
-            binding.tieName.clearFocus()
-            binding.tieBirthday.clearFocus()
-            binding.tieAddress.clearFocus()
-        }
-
 
         binding.sivAddPhoto.setOnClickListener {
+
+            // TODO: Add crop image and upload it
             requireContext().showCameraOptions(
                 getString(R.string.image_source_title),
                 getString(R.string.image_source_description),
@@ -249,6 +279,9 @@ class ProfileFragment : Fragment() {
                     imageUri = requireContext().getImgUri()
                     launcherCamera.launch(imageUri)
                 })
+        }
+        binding.ivNavigateBack.setOnClickListener {
+            findNavController().navigateUp()
         }
 
     }

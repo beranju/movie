@@ -20,8 +20,6 @@ import com.beran.domain.model.UserData
 import com.beran.domain.usecase.auth.GetSavedDataUseCase
 import com.beran.domain.usecase.auth.LogOutUseCase
 import com.beran.domain.usecase.auth.SaveDataProfileUseCase
-import com.beran.domain.usecase.auth.UpdateUserImageUseCase
-import com.beran.domain.usecase.auth.UploadPhotoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.launchIn
@@ -39,8 +37,6 @@ class SharedAuthViewModel @Inject constructor(
     private val savedDataUseCase: SaveDataProfileUseCase,
     private val getSavedDataUseCase: GetSavedDataUseCase,
     private val logOutUseCase: LogOutUseCase,
-    private val uploadPhotoUseCase: UploadPhotoUseCase,
-    private val updateUserImageUseCase: UpdateUserImageUseCase,
     private val workManager: WorkManager
 ) : ViewModel() {
 
@@ -50,14 +46,8 @@ class SharedAuthViewModel @Inject constructor(
     private var _saveDataState = MutableLiveData<AuthState>()
     val saveDataState: LiveData<AuthState> get() = _saveDataState
 
-//    private var _updateUserImage = MutableLiveData<AuthState>()
-//    val updateUserImage: LiveData<AuthState> get() = _updateUserImage
-
     private var _logOutState = MutableLiveData<AuthState>()
     val logOutState: LiveData<AuthState> get() = _logOutState
-
-//    private var _uploadState = MutableLiveData<UploadState>()
-//    val uploadState: LiveData<UploadState> get() = _uploadState
 
     val outputWorkInfos: LiveData<List<WorkInfo>>
     val progressWorkInfos: LiveData<List<WorkInfo>>
@@ -68,7 +58,7 @@ class SharedAuthViewModel @Inject constructor(
         progressWorkInfos = workManager.getWorkInfosByTagLiveData(TAG_PROGRESS)
     }
 
-    private fun getSavedData() =
+    fun getSavedData() =
         getSavedDataUseCase.invoke().onEach { result ->
             when (result) {
                 is Resource.Loading -> _userState.value = UserState.Loading
@@ -84,29 +74,12 @@ class SharedAuthViewModel @Inject constructor(
             when (result) {
                 is Resource.Loading -> _saveDataState.value = AuthState.Loading
                 is Resource.Error -> _saveDataState.value = AuthState.Error(result.error)
-                is Resource.Success -> _saveDataState.value = AuthState.Success
+                is Resource.Success -> {
+                    getSavedData()
+                    _saveDataState.value = AuthState.Success
+                }
             }
         }.launchIn(viewModelScope)
-
-//    fun uploadPhoto(file: File) {
-//        uploadPhotoUseCase.invoke(file).onEach { result ->
-//            when (result) {
-//                is Resource.Loading -> _uploadState.value = UploadState.Loading
-//                is Resource.Error -> _uploadState.value = UploadState.Error(result.error)
-//                is Resource.Success -> _uploadState.value = UploadState.Success(result.data)
-//            }
-//        }.launchIn(viewModelScope)
-//    }
-
-//    fun updateUserImage(url: String) {
-//        updateUserImageUseCase.invoke(url).onEach { result ->
-//            when (result) {
-//                is Resource.Loading -> _updateUserImage.value = AuthState.Loading
-//                is Resource.Error -> _updateUserImage.value = AuthState.Error(result.error)
-//                is Resource.Success -> _updateUserImage.value = AuthState.Success
-//            }
-//        }.launchIn(viewModelScope)
-//    }
 
     fun blurImage(uri: Uri) {
         val imageUri = Data.Builder()

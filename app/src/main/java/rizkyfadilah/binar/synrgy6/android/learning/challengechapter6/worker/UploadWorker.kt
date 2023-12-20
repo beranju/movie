@@ -62,6 +62,7 @@ class UploadWorker @AssistedInject constructor(
                             loading = false
                             error = null
                             imgUrl = result.data
+                            Log.e(TAG, "img url : $imageUri")
                         }
                     }
                 }

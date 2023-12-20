@@ -37,11 +37,8 @@ platform :android do
   end
 
   lane :build_free_debug do
+    gradle(task: "clean")
+    gradle(task: "test")
     gradle(task: "assembleFreeDebug")
   end
-
-  desc "Gradle clean"
-    lane :clean do
-        gradle(task: "clean")
-    end
 end

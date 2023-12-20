@@ -57,4 +57,16 @@
     <string name="icon_to_navigate_to_favorite_screen">Icon to navigate to favorite screen</string>
     <string name="cancle_the_update_progress">Cancle the update progress</string>
     <string name="thumbnail_of_movie">Thumbnail of movie</string>
+    <string name="update_name_title">Update Name</string>
+    <string name="name_label">Name</string>
+    <string name="update_address_title">Update Address</string>
+    <string name="address_label">Address</string>
+    <string name="update_username_title">Update Username</string>
+    <string name="username_label">Username</string>
+    <string name="birthday_label">Birthday</string>
+    <string name="icon_edit">Icon edit</string>
+    <string name="icon_back">Icon back</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="finish">Finish</string>
 </resources>

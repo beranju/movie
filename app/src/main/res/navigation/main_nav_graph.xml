@@ -74,6 +74,9 @@
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/slide_out" />
+        <action
+            android:id="@+id/action_profileFragment_to_cropPhotoFragment"
+            app:destination="@id/cropPhotoFragment" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -99,5 +102,14 @@
         <action
             android:id="@+id/action_favoriteFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cropPhotoFragment"
+        android:name="rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.ui.profile.CropPhotoFragment"
+        android:label="fragment_crop_photo"
+        tools:layout="@layout/fragment_crop_photo" >
+        <argument
+            android:name="img"
+            app:argType="string" />
     </fragment>
 </navigation>
