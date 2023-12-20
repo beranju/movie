@@ -40,5 +40,14 @@ platform :android do
     gradle(task: "clean")
     gradle(task: "test")
     gradle(task: "assembleFreeDebug")
+    firebase_app_distribution(
+        app: "1:66413692087:android:e96f4bafa8f955fbb8b932",
+        firebase_cli_token: "1//0gB9tGShH62csCgYIARAAGBASNwF-L9IrNTbnIXV58S8h-B3C0X1_rEAS8lVbmbU5zVPqGvBhueZ2d8Rbzbg-IBaUNtwKQMyzsk8",
+        debug: true,
+        android_artifact_type: "APK",
+        testers: "beranjugaming@gmail.com",
+        android_artifact_path: ENV['GRADLE_APK_OUTPUT_PATH'],
+        release_notes: "Movie ku free version"
+    )
   end
 end
