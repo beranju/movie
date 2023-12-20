@@ -6,6 +6,7 @@ plugins {
     id("androidx.navigation.safeargs.kotlin")
     id("com.google.firebase.firebase-perf")
     id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
 android {
@@ -77,6 +78,8 @@ dependencies {
 
     implementation("com.google.dagger:hilt-android:2.48.1")
     implementation("com.google.firebase:firebase-perf:20.5.1")
+    implementation("com.google.firebase:firebase-crashlytics:18.6.0")
+    implementation("com.google.firebase:firebase-analytics:21.5.0")
     kapt("com.google.dagger:hilt-android-compiler:2.48.1")
     implementation("androidx.hilt:hilt-navigation:1.1.0")
     implementation("androidx.hilt:hilt-work:1.1.0")
