@@ -12,12 +12,13 @@
 
 # Uncomment the line if you want fastlane to automatically update itself
 # update_fastlane
+require 'dotenv'
 
 default_platform(:android)
 
 platform :android do
   before_all do
-      Dotenv.load ".env.free"
+      Dotenv.load('free.env')
     end
 
   desc "Runs all the tests"
