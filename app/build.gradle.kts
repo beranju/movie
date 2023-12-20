@@ -4,6 +4,8 @@ plugins {
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
     id("androidx.navigation.safeargs.kotlin")
+    id("com.google.firebase.firebase-perf")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -74,6 +76,7 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
     implementation("com.google.dagger:hilt-android:2.48.1")
+    implementation("com.google.firebase:firebase-perf:20.5.1")
     kapt("com.google.dagger:hilt-android-compiler:2.48.1")
     implementation("androidx.hilt:hilt-navigation:1.1.0")
     implementation("androidx.hilt:hilt-work:1.1.0")
