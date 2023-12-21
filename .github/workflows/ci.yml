@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  build_free:
     name: Build
     runs-on: ubuntu-latest
     steps:
@@ -32,7 +32,7 @@ jobs:
           name: android-apk-free
           path: app/build/outputs/apk/**/**/*.apk
 
-  release:
+  release_free:
     name: Release
     runs-on: ubuntu-latest
     steps:
@@ -49,8 +49,8 @@ jobs:
           bundler-cache: true
       - uses: maierj/fastlane-action@v3.0.0
         with:
-          lane: 'build_pro_release'
+          lane: 'build_free_release'
       - uses: actions/upload-artifact@v3
         with:
-          name: android-apk-pro-release
+          name: android-apk-free-release
           path: app/build/outputs/apk/**/**/*.apk

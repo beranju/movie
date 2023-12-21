@@ -51,12 +51,12 @@ platform :android do
     )
   end
 
-  lane :build_pro_release do
+  lane :build_free_release do
     gradle(task: "clean")
     gradle(task: "test")
     gradle(
         task: "bundle",
-        flavor: "Pro",
+        flavor: "Free",
         build_type: "Release",
         properties: {
             "android.injected.signing.store.file" => "movieku.jks",
@@ -72,7 +72,7 @@ platform :android do
         android_artifact_type: "AAB",
         testers: "beranjugaming@gmail.com",
         android_artifact_path: ENV['GRADLE_APK_OUTPUT_PATH'],
-        release_notes: "Movie ku pro release"
+        release_notes: "Movie ku free release"
     )
   end
 end
