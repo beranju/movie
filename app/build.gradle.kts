@@ -23,6 +23,15 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        create("release") {
+            storeFile = file("/movieku.jks") //check that the file exists
+            storePassword = "Moviekukeystore1"
+            keyAlias  = "key0"
+            keyPassword = "Moviekukeystore1"
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
