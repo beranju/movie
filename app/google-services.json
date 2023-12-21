@@ -26,6 +26,25 @@
     },
     {
       "client_info": {
+        "mobilesdk_app_id": "1:66413692087:android:702015566f973e10b8b932",
+        "android_client_info": {
+          "package_name": "rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.pro"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlP-t7M7DkpuUhqDmNTd0mOWsuWgcpv90"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:66413692087:android:e96f4bafa8f955fbb8b932",
         "android_client_info": {
           "package_name": "rizkyfadilah.binar.synrgy6.android.learning.challengechapter6.pro.debug"

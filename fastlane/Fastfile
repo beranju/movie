@@ -12,15 +12,10 @@
 
 # Uncomment the line if you want fastlane to automatically update itself
 # update_fastlane
-require 'dotenv'
 
 default_platform(:android)
 
 platform :android do
-  before_all do
-      Dotenv.load('free.env')
-    end
-
   desc "Runs all the tests"
   lane :test do
     gradle(task: "test")
@@ -46,13 +41,38 @@ platform :android do
     gradle(task: "test")
     gradle(task: "assembleFreeDebug")
     firebase_app_distribution(
-        app: ENV["APP_ID"],
-        firebase_cli_token: ENV["FIREBASE_CLI_TOKEN"],
+        app: "1:66413692087:android:26b41a8322dbc3b0b8b932",
+        firebase_cli_token: "1//0gB9tGShH62csCgYIARAAGBASNwF-L9IrNTbnIXV58S8h-B3C0X1_rEAS8lVbmbU5zVPqGvBhueZ2d8Rbzbg-IBaUNtwKQMyzsk8",
         debug: true,
         android_artifact_type: "APK",
         testers: "beranjugaming@gmail.com",
         android_artifact_path: ENV['GRADLE_APK_OUTPUT_PATH'],
         release_notes: "Movie ku free version"
+    )
+  end
+
+  lane :build_pro_release do
+    gradle(task: "clean")
+    gradle(task: "test")
+    gradle(
+        task: "bundle",
+        flavor: "Pro",
+        build_type: "Release",
+        properties: {
+            "android.injected.signing.store.file" => "movieku.jks",
+            "android.injected.signing.store.password" => "Moviekukeystore1Moviekukeystore1",
+            "android.injected.signing.key.alias" => "key0",
+            "android.injected.signing.key.password" => "Moviekukeystore1",
+        }
+        )
+    firebase_app_distribution(
+        app: "1:66413692087:android:26b41a8322dbc3b0b8b932",
+        firebase_cli_token: "1//0gB9tGShH62csCgYIARAAGBASNwF-L9IrNTbnIXV58S8h-B3C0X1_rEAS8lVbmbU5zVPqGvBhueZ2d8Rbzbg-IBaUNtwKQMyzsk8",
+        debug: false,
+        android_artifact_type: "AAB",
+        testers: "beranjugaming@gmail.com",
+        android_artifact_path: ENV['GRADLE_APK_OUTPUT_PATH'],
+        release_notes: "Movie ku pro release"
     )
   end
 end
